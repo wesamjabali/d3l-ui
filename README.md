@@ -1,4 +1,4 @@
-# d2l-ui
+# cms-ui
 
 ## Project setup
 ```
