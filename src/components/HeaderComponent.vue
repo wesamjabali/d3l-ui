@@ -4,7 +4,7 @@
       <v-app-bar-nav-icon
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title class="white--text">CBS Employee</v-toolbar-title>
+      <v-toolbar-title class="white--text">D3L People</v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="isLoggedIn">
         <v-btn color="white" outlined>
