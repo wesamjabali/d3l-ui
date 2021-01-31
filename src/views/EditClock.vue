@@ -35,7 +35,7 @@
                     class="mx-auto"
                     v-model="userID"
                     :items="allUserIDs"
-                    item-text="username"
+                    item-text="email"
                     item-value="id"
                     prepend-icon="mdi-account"
                     :label="
@@ -108,7 +108,7 @@
                             <v-select
                               v-model="newPunchUserID"
                               :items="allUserIDs"
-                              item-text="username"
+                              item-text="email"
                               item-value="id"
                               prepend-icon="mdi-account"
                               label="User ID"
@@ -458,7 +458,7 @@ export default {
       this.users = users.data.users;
       this.users.forEach(user => {
         this.allUserIDs.push({
-          username: user.username,
+          email: user.email,
           id: user.id,
         });
       });

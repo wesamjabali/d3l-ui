@@ -14,19 +14,10 @@
         <v-form ref="addUserForm" v-model="addUserFormValid" @submit.prevent="addUser()">
           <v-text-field
             outlined
-            v-model="username"
-            name="username"
-            type="text"
-            label="Username"
-            required
-            :rules="usernameRules"
-          ></v-text-field>
-          <v-text-field
-            outlined
             v-model="email"
             name="email"
-            type="email"
-            label="E-mail"
+            type="text"
+            label="email"
             required
             :rules="emailRules"
           ></v-text-field>
@@ -56,12 +47,6 @@
             :rules="payrateRules"
             required
           ></v-text-field>
-          <v-label>Special Roles:</v-label>
-          <v-checkbox
-            v-model="roles"
-            label="Super"
-            value="super"
-          ></v-checkbox>
           <div class="d-flex justify-center">
             <v-btn type="submit" :disabled="!addUserFormValid" color="blue">Add User</v-btn>
           </div>
@@ -73,19 +58,15 @@
 
 <script>
 export default {
-  name: 'AddUser',
+  name: 'Register',
   data() {
     return {
-      username: '',
       email: '',
       password: '',
       passwordConfirm: '',
-      roles: [],
-      payrate: '',
       userAdded: false,
 
       addUserFormValid: false,
-      usernameRules: [v => !!v || 'Username is required'],
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -99,10 +80,6 @@ export default {
       passwordConfirmRules: [
         v => (v == this.password) || 'Password not confirmed',
       ],
-      payrateRules: [
-        v => !!v || 'Pay rate is required',
-        v => v > 8 || 'Pay rate must be greater than 8',
-      ],
     };
   },
   methods: {
@@ -113,19 +90,15 @@ export default {
       };
 
       try {
-        if (this.roles.indexOf('associate') === -1)
-          this.roles.push('associate');
-        let username = this.username.toLowerCase();
-        let email = this.email;
+        let email = this.email.toLowerCase();
         let password = this.password;
-        let payrate = this.payrate;
-        let roles = this.roles;
-        await this.$axios.post('/account/users', {
-          username,
+        await this.$axios.post('/account/user/register', {
           email,
           password,
-          payrate,
-          roles,
+          // first_name, 
+          // last_name,
+          // phone,
+          // address
         });
         this.userAdded = true;
         alert('User added.');
