@@ -1,17 +1,17 @@
 <template>
   <div>
-    <v-app-bar app dark color="black">
+    <v-app-bar app dark color="orange darken-4">
       <v-app-bar-nav-icon
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title class="white--text">D3L People</v-toolbar-title>
+      <v-toolbar-title class="white--text">D3L</v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="isLoggedIn">
         <v-btn color="white" outlined>
           <v-icon left>
             mdi-account-circle
           </v-icon>
-          {{ username }}
+          {{ email }}
         </v-btn>
       </div>
     </v-app-bar>
@@ -22,31 +22,23 @@
       <v-divider></v-divider>
       <v-list nav dense>
         <v-list-item-group active-class="text--accent-4">
-          <v-list-item v-if="isLoggedIn" to="/clock">
+
+          <v-list-item v-if="isLoggedIn" to="/home">
             <v-list-item-icon>
-              <v-icon>mdi-clock</v-icon>
+              <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Punch Clock</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isLoggedIn" to="/editSelfClock">
-            <v-list-item-icon>
-              <v-icon>mdi-clock</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Edit Clock</v-list-item-title>
-          </v-list-item>
-          <v-list-item v-if="isLoggedIn && isSuper" to="/addUser">
+
+          <v-list-item v-if="isLoggedIn && isAdmin" to="/addRole">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Add User</v-list-item-title>
+            <v-list-item-title>Add Role</v-list-item-title>
           </v-list-item>
-          <v-list-item v-if="isLoggedIn && isSuper" to="/editClock">
-            <v-list-item-icon>
-              <v-icon>mdi-clock</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>(Admin) Edit Clock</v-list-item-title>
-          </v-list-item>
+
         </v-list-item-group>
+
       </v-list>
       <div class="pa-4" v-if="isLoggedIn">
         <v-btn
@@ -75,11 +67,14 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
-    isSuper() {
-      return this.$store.getters.roles.includes('super');
+    isAdmin() {
+      return this.$store.getters.roles.includes('admin');
     },
-    username() {
-      return this.$store.getters.username;
+    isFaculty() {
+      return this.$store.getters.roles.includes('faculty');
+    },
+    email() {
+      return this.$store.getters.email;
     },
   },
 };

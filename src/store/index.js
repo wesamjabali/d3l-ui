@@ -14,15 +14,15 @@ const state = {
 
 const getters = {
   isLoggedIn: state => !!state.token,
-  username: state => state.user.username || "",
-  roles: state => state.user.roles
+  email: state => state.user.email || "",
+  roles: state => state.user.roles || []
 };
 
 const actions = {
   async login({
     dispatch
   }, {
-    username,
+    email,
     password
   }) {
     try {
@@ -30,7 +30,7 @@ const actions = {
       const {
         data = {}
       } = await axios.post(builtURL, {
-        username,
+        email,
         password
       });
       const {
