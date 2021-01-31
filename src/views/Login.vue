@@ -11,9 +11,9 @@
         <v-form @submit.prevent="login()" ref="loginForm">
           <v-text-field
             outlined
-            v-model="username"
-            label="Username"
-            name="username"
+            v-model="email"
+            label="E-Mail"
+            name="email"
             type="text"
           ></v-text-field>
           <v-text-field
@@ -34,6 +34,16 @@
               >login</v-btn
             >
           </div>
+          <div class="d-flex justify-center">
+            <v-btn
+              :loading="buttonLoading"
+              :disabled="buttonLoading"
+              :width="$vuetify.breakpoint.xsOnly ? '40vw' : '140px'"
+              color="gray"
+              to="/register"
+              >Register</v-btn
+            >
+          </div>
         </v-form>
       </v-card>
     </v-col>
@@ -45,18 +55,18 @@ export default {
   name: 'Login',
   data() {
     return {
-      username: '',
+      email: '',
       password: '',
       loginError: false,
       buttonLoading: false,
       loginRules: {
         wrong: () =>
-          !this.loginError || 'Username or password is incorrect.',
+          !this.loginError || 'email or password is incorrect.',
       },
     };
   },
   watch: {
-    username() {
+    email() {
       this.loginError = false;
       this.$refs.loginForm.validate();
     },
@@ -69,11 +79,11 @@ export default {
     async login() {
       this.buttonLoading = true;
       try {
-        let username = this.username.toLowerCase();
+        let email = this.email.toLowerCase();
         let password = this.password;
 
-        await this.$store.dispatch('login', { username, password });
-        this.$router.push('/clock');
+        await this.$store.dispatch('login', { email, password });
+        this.$router.push('/home');
       } catch (error) {
         this.loginError = true;
         this.$refs.loginForm.validate();
