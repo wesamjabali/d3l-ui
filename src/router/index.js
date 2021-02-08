@@ -4,6 +4,7 @@ import Login from "@/views/Login.vue";
 import Home from "@/views/Home.vue";
 import Register from "@/views/Register.vue";
 import store from "../store";
+import ClassAdd from "@/views/ClassAdd.vue"
 
 Vue.use(VueRouter);
 
@@ -30,6 +31,11 @@ const routes = [
     path: "/home",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/classadd",
+    name: "Class Add",
+    component: ClassAdd
   },
   {
     path: "*",

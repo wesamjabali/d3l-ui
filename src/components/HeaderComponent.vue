@@ -7,17 +7,29 @@
       <v-toolbar-title class="white--text">D3L</v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="isLoggedIn">
+        <v-toolbar-items>
+          <v-btn text>
+          Faculty Support
+        </v-btn>
+        <v-btn text>
+          Technical Support
+        </v-btn>
+        <v-btn text>
+          Course Evaluations
+        </v-btn>
         <v-btn color="white" outlined>
           <v-icon left>
             mdi-account-circle
           </v-icon>
           {{ email }}
         </v-btn>
+        </v-toolbar-items>
       </div>
     </v-app-bar>
+
     <v-navigation-drawer v-model="drawer" app>
       <div class="pa-4 title">
-        Main Navigation
+        Navigation
       </div>
       <v-divider></v-divider>
       <v-list nav dense>
@@ -27,7 +39,15 @@
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Punch Clock</v-list-item-title>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item>
+          <!-- add faculty check -->
+          <!-- change class to course -->
+          <v-list-item v-if="isLoggedIn" to="/classadd">
+            <v-list-item-icon>
+              <v-icon>mdi-book</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Add Course</v-list-item-title>
           </v-list-item>
 
           <v-list-item v-if="isLoggedIn && isAdmin" to="/addRole">
@@ -35,6 +55,20 @@
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Add Role</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-bell</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Notifications</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-chat</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Subscriptions</v-list-item-title>
           </v-list-item>
 
         </v-list-item-group>
