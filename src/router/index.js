@@ -4,7 +4,7 @@ import Login from "@/views/Login.vue";
 import Home from "@/views/Home.vue";
 import Register from "@/views/Register.vue";
 import store from "../store";
-import ClassAdd from "@/views/ClassAdd.vue"
+import CourseAdd from "@/views/CourseAdd.vue"
 
 Vue.use(VueRouter);
 
@@ -33,9 +33,9 @@ const routes = [
     component: Home
   },
   {
-    path: "/classadd",
-    name: "Class Add",
-    component: ClassAdd
+    path: "/courseadd",
+    name: "Course Add",
+    component: CourseAdd
   },
   {
     path: "*",
