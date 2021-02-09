@@ -6,7 +6,9 @@
       <v-container>
         <v-row no-gutters>
           <v-col cols="12">
+            
             <router-view />
+          
           </v-col>
         </v-row>
       </v-container>
