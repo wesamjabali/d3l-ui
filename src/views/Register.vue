@@ -12,39 +12,90 @@
         </div>
         <v-divider class="my-3"></v-divider>
         <v-form ref="addUserForm" v-model="addUserFormValid" @submit.prevent="addUser()">
+			
+			<v-row>
+				<v-col
+          		cols="12"
+          		md="2"
+        		>
+				<v-avatar
+					app
+  					color="primary"
+  					rounded
+  					size="175"
+				></v-avatar>
+				</v-col>
+
+				<v-col
+  				cols="13"
+    			md="4"
+        		>
+			<v-file-input
+				app
+    			label="File input"
+    			filled
+    			prepend-icon="mdi-camera"
+  			></v-file-input>
+				</v-col>
+
+			</v-row>
+
+			<v-row>
+			<v-col
+          		cols="12"
+          		md="4"
+        	>	  
           <v-text-field
             outlined
             v-model="email"
+			:counter="200"
             name="email"
             type="text"
             label="email"
             required
             :rules="emailRules"
           ></v-text-field>
+			</v-col>
+
+			<v-col
+          		cols="12"
+          		md="4"
+        	>	 
           <v-text-field
             outlined
             v-model="password"
+			:counter="200"
             name="password"
             type="password"
             label="Password"
             :rules="passwordRules"
           ></v-text-field>
+			</v-col>
+
+			<v-col
+          		cols="12"
+          		md="4"
+        	>	 
           <v-text-field
             outlined
             v-model="passwordConfirm"
+			:counter="200"
             name="passwordConfirm"
             type="password"
             label="Confirm Password"
             
             :rules="passwordConfirmRules"
           ></v-text-field>
-          /// names
+			</v-col>
+			</v-row>
+
           <v-form>
             <v-container>
               <v-row>
                 <v-col cols="12" sm="4">
                   <v-text-field
                     v-model="first"
+					:counter="200"
                     label="First Name"
                     outlined
                   ></v-text-field>
@@ -53,6 +104,7 @@
                    <v-col cols="12" sm="4">
                   <v-text-field
                     v-model="middle"
+					:counter="200"
                     label="Middle Name"
                     outlined
                   ></v-text-field>
@@ -61,6 +113,7 @@
                 <v-col cols="12" sm="4">
                   <v-text-field
                     v-model="last"
+					:counter="200"
                     label="Last Name"
                     outlined
                   ></v-text-field>
@@ -68,12 +121,14 @@
               </v-row>
             </v-container>
           </v-form>
-          
-          /// country, state
 
               <v-container fluid>
-                <v-row align="center">
-      
+                <v-row>
+				<v-col
+          			cols="12"
+        			md="4"
+    			>
+
               <v-autocomplete
                 v-model="e1"
                 :items="states"
@@ -83,13 +138,12 @@
                 prepend-icon="mdi-map"
                 single-line
                ></v-autocomplete>
-                 
-              </v-row>
-            </v-container>
+				</v-col> 
 
-            <v-container fluid>
-                <v-row align="center">
-      
+				<v-col
+          			cols="12"
+          			md="4"
+        		>	 
               <v-select
                 v-model="e2"
                 :items="country"
@@ -99,9 +153,43 @@
                 prepend-icon="mdi-map"
                 single-line
                ></v-select>
-                 
-              </v-row>
+				</v-col>
+              
+			  <v-col cols="12" sm="4">
+                  <v-text-field
+                    v-model="zip"
+					:counter="5"
+                    label="Zip Code"
+                    outlined
+                  ></v-text-field>
+                  </v-col>
+			  </v-row>
             </v-container>
+
+			<v-row>
+				<v-col
+					cols="12"
+					md="4"	
+				>
+				<v-text-field
+                    v-model="address"
+                    label="Address"
+                    outlined
+                  ></v-text-field>
+				</v-col>
+
+				<v-col
+					cols="12"
+					md="4"	
+				>
+				<v-text-field
+                    v-model="phone_number"
+                    label="Phone Number"
+                    outlined
+                  ></v-text-field>
+				</v-col>
+
+			</v-row>
           
 
 
@@ -141,7 +229,7 @@ export default {
           'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
         ],
 
-        Country: ["Afghanistan", "Albania",	"Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica",
+        country: ["Afghanistan", "Albania",	"Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica",
 	"Antigua and Barbuda",
 	"Argentina",
 	"Armenia",
