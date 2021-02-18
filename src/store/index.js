@@ -26,7 +26,7 @@ const actions = {
     password
   }) {
     try {
-      const builtURL = `/auth/login`;
+      const builtURL = `/non_auth/login`;
       const {
         data = {}
       } = await axios.post(builtURL, {
