@@ -3,10 +3,16 @@
     <v-col cols="12" class="d-flex justify-center">
       <v-card
         class="ma-6 pa-6"
-        :width="$vuetify.breakpoint.xsOnly ? '100vw' : '70vw'"
+        :width="$vuetify.breakpoint.xsOnly ? '100vw' : '30vw'"
         color="#f2f2f2"
       >
-        <div class="title">Login Form</div>
+        <v-img
+          src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+          height="100px"
+        >
+        <div class="white--text">Login Form</div>
+        </v-img>
+        
         <v-divider class="my-3"></v-divider>
         <v-form @submit.prevent="login()" ref="loginForm">
           <v-text-field
