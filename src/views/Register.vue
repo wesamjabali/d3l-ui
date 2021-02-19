@@ -80,30 +80,31 @@
             </v-col>
           </v-row>
           <v-row>
+            <v-col cols="12" md="4">
+              <v-text-field
+                v-model="street_address"
+                label="Street Address"
+                outlined
+              ></v-text-field>
+            </v-col>
             <v-col cols="12" md="2">
+              <v-text-field v-model="city" label="City" outlined></v-text-field>
+            </v-col>
+            <v-col cols="12" md="1">
               <v-autocomplete
                 v-model="state"
                 :items="states"
                 menu-props="auto"
                 label="State"
-                prepend-icon="mdi-map"
-                single-line
+                outlined
               ></v-autocomplete>
             </v-col>
 
-            <v-col cols="12" md="3">
+            <v-col cols="12" md="2">
               <v-text-field
                 v-model="zip_code"
                 :counter="5"
                 label="Zip Code"
-                outlined
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="street_address"
-                label="Street Address"
                 outlined
               ></v-text-field>
             </v-col>
@@ -146,6 +147,7 @@ export default {
       zip_code: "",
       street_address: "",
       phone_number: "",
+      city: "",
       user_added: false,
 
       states: states,
@@ -178,7 +180,15 @@ export default {
         let first_name = this.first_name;
         let last_name = this.last_name;
         let phone = this.phone_number;
-        let address = this.street_address;
+        let address =
+          this.street_address +
+          ", " +
+          this.city +
+          ", " +
+          this.state +
+          ", " +
+          this.zip_code;
+
         await this.$axios.post("/non_auth/register", {
           email,
           password,
