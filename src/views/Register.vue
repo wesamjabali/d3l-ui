@@ -21,18 +21,7 @@
           @submit.prevent="addUser()"
         >
           <v-row>
-            <v-col sm="12" md="6">
-              <v-file-input
-                app
-                label="File input"
-                filled
-                prepend-icon="mdi-camera"
-              ></v-file-input>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col sm="12" md="4">
+            <v-col cols="12" md="4">
               <v-text-field
                 outlined
                 v-model="email"
@@ -44,7 +33,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col sm="12" md="4">
+            <v-col cols="12" md="4">
               <v-text-field
                 outlined
                 v-model="password"
@@ -55,7 +44,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col sm="12" md="4">
+            <v-col cols="12" md="4">
               <v-text-field
                 outlined
                 v-model="password_confirm"
@@ -67,14 +56,14 @@
             </v-col>
           </v-row>
           <v-row class="d-flex">
-            <v-col sm="12" md="4">
+            <v-col cols="12" md="4">
               <v-text-field
                 v-model="first_name"
                 label="First Name"
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col sm="12" md="4">
+            <v-col cols="12" md="4">
               <v-text-field
                 v-model="middle_name"
                 label="Middle Name"
@@ -82,7 +71,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col sm="12" md="4">
+            <v-col cols="12" md="4">
               <v-text-field
                 v-model="last_name"
                 label="Last Name"
@@ -91,7 +80,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="2">
+            <v-col cols="12" md="2">
               <v-autocomplete
                 v-model="state"
                 :items="states"
@@ -102,7 +91,7 @@
               ></v-autocomplete>
             </v-col>
 
-            <v-col cols="3">
+            <v-col cols="12" md="3">
               <v-text-field
                 v-model="zip_code"
                 :counter="5"
@@ -111,7 +100,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="4">
+            <v-col cols="12" md="4">
               <v-text-field
                 v-model="street_address"
                 label="Street Address"
@@ -119,7 +108,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="3">
+            <v-col cols="12" md="3">
               <v-text-field
                 v-model="phone_number"
                 label="Phone Number"
