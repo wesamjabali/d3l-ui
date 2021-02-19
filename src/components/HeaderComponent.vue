@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app color="#6A76AB" dark>
+    <v-app-bar app color="#0D47A1" dark>
       <v-app-bar-nav-icon
         v-if="isLoggedIn"
         @click="drawer = !drawer"
@@ -8,15 +8,6 @@
       <v-toolbar-title class="white--text">D3L</v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="isLoggedIn">
-        <v-btn v-if="isFaculty" text>
-          Faculty Support
-        </v-btn>
-        <v-btn text class="ml-2">
-          Technical Support
-        </v-btn>
-        <v-btn text class="ml-2">
-          Course Evaluations
-        </v-btn>
         <v-btn color="white" outlined class="ml-7">
           <v-icon left>
             mdi-account-circle
@@ -39,7 +30,7 @@
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Punch Clock</v-list-item-title>
+            <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
 
           <v-list-item v-if="isAdmin" to="/addRole">

@@ -1,54 +1,50 @@
 <template>
   <v-row>
     <v-col cols="12" class="d-flex justify-center">
-      <v-card
-        class="ma-6 pa-6"
-        :width="$vuetify.breakpoint.xsOnly ? '100vw' : '50vw'"
-        color="#f2f2f2"
-      >
+      <v-card :width="$vuetify.breakpoint.xsOnly ? '100vw' : '70vw'">
         <v-img
           src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-          max-height="15vh"
-        ></v-img>
-
-        <v-divider class="my-3"></v-divider>
-        <v-form @submit.prevent="login()" ref="loginForm">
-          <v-text-field
-            outlined
-            v-model="email"
-            label="E-Mail"
-            name="email"
-            type="text"
-          ></v-text-field>
-          <v-text-field
-            outlined
-            v-model="password"
-            name="password"
-            type="password"
-            label="Password"
-            :rules="[loginRules.wrong]"
-          ></v-text-field>
-          <div class="py-4 d-flex justify-center">
-            <v-btn
-              :loading="buttonLoading"
-              :disabled="buttonLoading"
-              :width="$vuetify.breakpoint.xsOnly ? '40vw' : '140px'"
-              type="submit"
-              color="blue"
-              >login</v-btn
-            >
-          </div>
-          <div class="d-flex justify-center">
-            <v-btn
-              :loading="buttonLoading"
-              :disabled="buttonLoading"
-              :width="$vuetify.breakpoint.xsOnly ? '40vw' : '140px'"
-              color="gray"
-              to="/register"
-              >Register</v-btn
-            >
-          </div>
-        </v-form>
+          height="15vh"
+        >
+        </v-img>
+        <v-card-title class="justify-center">Login</v-card-title>
+          <v-form @submit.prevent="login()" ref="loginForm" class="px-10 pb-5">
+            <v-text-field
+              outlined
+              v-model="email"
+              label="E-Mail"
+              name="email"
+              type="text"
+            ></v-text-field>
+            <v-text-field
+              outlined
+              v-model="password"
+              name="password"
+              type="password"
+              label="Password"
+              :rules="[loginRules.wrong]"
+            ></v-text-field>
+            <div class="py-4 d-flex justify-center">
+              <v-btn
+                :loading="buttonLoading"
+                :disabled="buttonLoading"
+                :width="$vuetify.breakpoint.xsOnly ? '40vw' : '140px'"
+                type="submit"
+                color="blue"
+                >login</v-btn
+              >
+            </div>
+            <div class="d-flex justify-center">
+              <v-btn
+                :loading="buttonLoading"
+                :disabled="buttonLoading"
+                :width="$vuetify.breakpoint.xsOnly ? '40vw' : '140px'"
+                color="gray"
+                to="/register"
+                >Register</v-btn
+              >
+            </div>
+          </v-form>
       </v-card>
     </v-col>
   </v-row>
