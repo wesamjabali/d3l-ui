@@ -21,7 +21,7 @@ const getters = {
   email: state => state.user.email || "",
   roles: state => state.user.roles || [],
   first_name: state => state.user.first_name || "",
-  last_name: state => state.user.last_name || "",
+  last_name: state => state.user.last_name || ""
 };
 
 const actions = {
@@ -47,6 +47,7 @@ const actions = {
     localStorage.removeItem("token");
     commit("clearUser");
     router.push("/");
+    commit("snack", { type: "error", message: "Session timed out." });
   },
 
   setUser({ commit }, { token }) {
@@ -59,7 +60,6 @@ const actions = {
       user
     });
   },
-  
 
   initializeApp({ dispatch }) {
     // handle main init logic
@@ -93,9 +93,9 @@ const mutations = {
     return state;
   },
   snack: (state, payload) => {
-    state.snack = true,
-    state.snack_message = payload.message,
-    state.snack_type = payload.type
+    (state.snack = true),
+      (state.snack_message = payload.message),
+      (state.snack_type = payload.type);
     return state;
   },
   snack_toggle: (state, payload) => {
