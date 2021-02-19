@@ -9,36 +9,30 @@ Vue.use(Vuex);
 
 const state = {
   token: "",
-  user: {}
+  user: {},
+  snack: false,
+  snack_message: "",
+  snack_type: ""
 };
 
 const getters = {
   isLoggedIn: state => !!state.token,
-  token : state => state.token || null,
-  email: state => state.user.email || '',
+  token: state => state.token || null,
+  email: state => state.user.email || "",
   roles: state => state.user.roles || [],
-  first_name: state => state.user.first_name || '',
-  last_name: state => state.user.last_name || ''
+  first_name: state => state.user.first_name || "",
+  last_name: state => state.user.last_name || "",
 };
 
 const actions = {
-  async login({
-    dispatch
-  }, {
-    email,
-    password
-  }) {
+  async login({ dispatch }, { email, password }) {
     try {
       const builtURL = `/non_auth/login`;
-      const {
-        data = {}
-      } = await axios.post(builtURL, {
+      const { data = {} } = await axios.post(builtURL, {
         email,
         password
       });
-      const {
-        token
-      } = data;
+      const { token } = data;
       dispatch("setUser", {
         token
       });
@@ -48,20 +42,14 @@ const actions = {
     }
   },
 
-  logout({
-    commit
-  }) {
+  logout({ commit }) {
     // clear user auth
     localStorage.removeItem("token");
     commit("clearUser");
     router.push("/");
   },
 
-  setUser({
-    commit
-  }, {
-    token
-  }) {
+  setUser({ commit }, { token }) {
     // handle localstorage updates
     localStorage.setItem("token", token);
     const user = jwtDecode(token);
@@ -71,8 +59,9 @@ const actions = {
       user
     });
   },
+  
 
-  initializeApp({dispatch}) {
+  initializeApp({ dispatch }) {
     // handle main init logic
     const storageToken = localStorage.getItem("token") || "";
     if (storageToken) {
@@ -101,6 +90,16 @@ const mutations = {
     state.token = "";
     state.user = {};
     state.roles = [];
+    return state;
+  },
+  snack: (state, payload) => {
+    state.snack = true,
+    state.snack_message = payload.message,
+    state.snack_type = payload.type
+    return state;
+  },
+  snack_toggle: (state, payload) => {
+    state.snack = payload;
     return state;
   }
 };

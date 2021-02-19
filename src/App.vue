@@ -1,11 +1,14 @@
 <template>
   <v-app>
     <HeaderComponent />
+    <Snackbar />
     <v-main>
       <v-container>
         <v-row no-gutters>
           <v-col cols="12">
+            
             <router-view />
+          
           </v-col>
         </v-row>
       </v-container>
@@ -14,11 +17,13 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/HeaderComponent";
+import HeaderComponent from '@/components/HeaderComponent';
+import Snackbar from '@/components/Snackbar';
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    HeaderComponent
-  }
+    HeaderComponent,
+    Snackbar,
+  },
 };
 </script>

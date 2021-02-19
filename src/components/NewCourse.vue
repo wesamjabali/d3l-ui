@@ -1,17 +1,18 @@
 <template>
   <div>
-    <Snackbar
-      :message="snack_message"
-      v-if="snack_message"
-      @done="snack_message = ''"
-    />
     <v-dialog persistent width="500px" v-model="dialog">
       <v-card class="px-2 py-2">
         <v-card-title class="d-flex justify-center">
           Create Course
         </v-card-title>
         <v-divider class="mb-3" />
-        <v-form class="px-8" @submit.prevent="submit" @keyup.esc.native="$emit('done')" @keyup.enter.native="submit" ref="form">
+        <v-form
+          class="px-8"
+          @submit.prevent="submit"
+          @keyup.esc.native="$emit('done')"
+          @keyup.enter.native="submit"
+          ref="form"
+        >
           <v-row>
             <v-col cols="12">
               <v-text-field
@@ -64,12 +65,8 @@
 </template>
 
 <script>
-import Snackbar from "@/components/Snackbar";
 export default {
   name: "NewCourse",
-  components: {
-    Snackbar
-  },
   data() {
     return {
       error: false,
@@ -112,7 +109,7 @@ export default {
           this.$emit("done");
         })
         .catch(() => {
-          this.snack_message = "Course already exists!";
+          this.$snack.error("Course already exists!");
         });
     }
   }
