@@ -25,9 +25,9 @@
               <v-text-field
                 outlined
                 v-model="email"
-                name="email"
+                name="E-Mail"
                 type="text"
-                label="email"
+                label="E-Mail"
                 required
                 :rules="emailRules"
               ></v-text-field>
