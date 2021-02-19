@@ -14,8 +14,8 @@ const axios = Axios.create({
 axios.interceptors.request.use(
   config => {
     const token = localStorage.getItem("token");
-    if(token) {
-      config.headers['Authorization'] = 'Bearer ' + token;
+    if (token) {
+      config.headers["Authorization"] = "Bearer " + token;
     }
     return config;
   },
@@ -34,7 +34,7 @@ axios.interceptors.response.use(
     console.log("error", error.response.status);
     // failed response interceptor (status codes 300+)
     if (error.response.status == 401) {
-      store.default.dispatch("logout");
+      store.dispatch("logout");
     }
     return Promise.reject(error);
   }
