@@ -35,6 +35,7 @@ axios.interceptors.response.use(
     // failed response interceptor (status codes 300+)
     if (error.response.status == 401) {
       store.dispatch("logout");
+      store.commit("snack", {type: "error", message: "Session timed out."});
     }
     return Promise.reject(error);
   }

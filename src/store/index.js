@@ -25,7 +25,7 @@ const getters = {
 };
 
 const actions = {
-  async login({ dispatch }, { email, password }) {
+  async login({ dispatch, commit }, { email, password }) {
     try {
       const builtURL = `/non_auth/login`;
       const { data = {} } = await axios.post(builtURL, {
@@ -36,6 +36,7 @@ const actions = {
       dispatch("setUser", {
         token
       });
+      commit("snack", { type: "success", message: "Welcome!" });
     } catch (err) {
       console.log("login -> err", err);
       throw err;
@@ -47,7 +48,7 @@ const actions = {
     localStorage.removeItem("token");
     commit("clearUser");
     router.push("/");
-    commit("snack", { type: "error", message: "Session timed out." });
+    commit("snack", { type: "success", message: "Goodbye!" });
   },
 
   setUser({ commit }, { token }) {
@@ -93,9 +94,9 @@ const mutations = {
     return state;
   },
   snack: (state, payload) => {
-    (state.snack = true),
-      (state.snack_message = payload.message),
-      (state.snack_type = payload.type);
+    state.snack = true;
+    state.snack_message = payload.message;
+    state.snack_type = payload.type;
     return state;
   },
   snack_toggle: (state, payload) => {
