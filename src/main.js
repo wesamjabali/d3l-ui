@@ -1,14 +1,21 @@
-import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
-import store from './store';
-import axios from './plugins/axios';
-import vuetify from './plugins/vuetify';
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import axios from "./plugins/axios";
+import vuetify from "./plugins/vuetify";
 
 // Attach axios
 Vue.prototype.$axios = axios;
-
 Vue.config.productionTip = false;
+Vue.prototype.$snack = {
+  success: (message = "Success!") => {
+    store.commit("snack", { message: message, type: "success" });
+  },
+  error: (message = "Error!") => {
+    store.commit("snack", { message: message, type: "error" });
+  }
+};
 
 new Vue({
   router,
@@ -16,6 +23,6 @@ new Vue({
   vuetify,
   render: h => h(App),
   created() {
-    store.dispatch('initializeApp');
-  },
-}).$mount('#app');
+    store.dispatch("initializeApp");
+  }
+}).$mount("#app");

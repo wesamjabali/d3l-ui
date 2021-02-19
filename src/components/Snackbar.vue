@@ -1,8 +1,8 @@
 <template>
-  <v-snackbar rounded="pill" v-model="snackbar">
+  <v-snackbar :color="type" rounded="pill" v-model="show">
     {{ message }}
     <template v-slot:action="">
-      <v-btn color="blue" text @click="$emit('done')">
+      <v-btn text @click="show = false">
         Close
       </v-btn>
     </template>
@@ -12,21 +12,21 @@
 <script>
 export default {
   name: "Snackbar",
-  props: {
-    message: String
-  },
-  watch: {
-    snackbar() {
-      if (!this.snackbar) {
-        this.$emit("done");
+  computed: {
+    show: {
+      get() {
+        return this.$store.state.snack
+      },
+      set(value) {
+        this.$store.commit("snack_toggle", value);
       }
+    },
+    message() {
+      return this.$store.state.snack_message;
+    },
+    type() {
+      return this.$store.state.snack_type;
     }
-  },
-  data() {
-    return {
-      error: false,
-      snackbar: true
-    };
   }
 };
 </script>
