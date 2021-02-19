@@ -106,6 +106,7 @@ export default {
           section_number
         })
         .then(() => {
+          this.$snack.success(title + " added!")
           this.$emit("done");
         })
         .catch(() => {
