@@ -23,7 +23,7 @@
                 counter="100"
               ></v-text-field>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="12" md="4">
               <v-text-field
                 outlined
                 label="Prefix"
@@ -32,7 +32,7 @@
                 :rules="course_rules"
               ></v-text-field>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="12" md="4">
               <v-text-field
                 outlined
                 label="Number"
@@ -42,7 +42,7 @@
                 :rules="course_rules"
               ></v-text-field>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="12" md="4">
               <v-text-field
                 outlined
                 label="Section"
