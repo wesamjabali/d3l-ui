@@ -1,27 +1,27 @@
 <template>
-  <v-row no-gutters>
-    <v-col cols="12" class="d-flex justify-center">
-      <v-card
-        class="ma-6 pa-6"
-        :width="$vuetify.breakpoint.xsOnly ? '100vw' : '70vw'"
-        color="#f2f2f2"
-        :disabled="user_added"
-      >
-        <div class="title">
-          Register
-        </div>
-        <v-divider class="my-3"></v-divider>
+  <div class="d-flex justify-center">
+    <v-card
+      class="ma-6 pa-6"
+      width="90vw"
+      color="#f2f2f2"
+      :disabled="user_added"
+    >
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <div class="title">
+              Register
+            </div>
+            <v-divider class="my-3"></v-divider>
+          </v-col>
+        </v-row>
         <v-form
           ref="addUserForm"
           v-model="addUserFormValid"
           @submit.prevent="addUser()"
         >
           <v-row>
-            <v-col cols="12" md="2">
-              <v-avatar app color="primary" rounded size="175"></v-avatar>
-            </v-col>
-
-            <v-col cols="13" md="4">
+            <v-col sm="12" md="6">
               <v-file-input
                 app
                 label="File input"
@@ -32,11 +32,10 @@
           </v-row>
 
           <v-row>
-            <v-col cols="12" md="4">
+            <v-col sm="12" md="4">
               <v-text-field
                 outlined
                 v-model="email"
-                :counter="200"
                 name="email"
                 type="text"
                 label="email"
@@ -45,11 +44,10 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" md="4">
+            <v-col sm="12" md="4">
               <v-text-field
                 outlined
                 v-model="password"
-                :counter="200"
                 name="password"
                 type="password"
                 label="Password"
@@ -57,11 +55,10 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" md="4">
+            <v-col sm="12" md="4">
               <v-text-field
                 outlined
                 v-model="password_confirm"
-                :counter="200"
                 name="password_confirm"
                 type="password"
                 label="Confirm Password"
@@ -69,68 +66,52 @@
               ></v-text-field>
             </v-col>
           </v-row>
+          <v-row class="d-flex">
+            <v-col sm="12" md="4">
+              <v-text-field
+                v-model="first_name"
+                label="First Name"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col sm="12" md="4">
+              <v-text-field
+                v-model="middle_name"
+                label="Middle Name"
+                outlined
+              ></v-text-field>
+            </v-col>
 
-          <v-form>
-            <v-container>
-              <v-row>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="first_name"
-                    :counter="200"
-                    label="First Name"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="middle_name"
-                    :counter="200"
-                    label="Middle Name"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="last_name"
-                    :counter="200"
-                    label="Last Name"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-
-          <v-container fluid>
-            <v-row>
-              <v-col cols="12" md="4">
-                <v-autocomplete
-                  v-model="state"
-                  :items="states"
-                  menu-props="auto"
-                  label="States"
-                  prepend-icon="mdi-map"
-                  single-line
-                ></v-autocomplete>
-              </v-col>
-
-              <v-col cols="12" md="4"> </v-col>
-
-              <v-col cols="12" sm="4">
-                <v-text-field
-                  v-model="zip_code"
-                  :counter="5"
-                  label="Zip Code"
-                  outlined
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-
+            <v-col sm="12" md="4">
+              <v-text-field
+                v-model="last_name"
+                label="Last Name"
+                outlined
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <v-row>
-            <v-col cols="12" md="4">
+            <v-col cols="2">
+              <v-autocomplete
+                v-model="state"
+                :items="states"
+                menu-props="auto"
+                label="State"
+                prepend-icon="mdi-map"
+                single-line
+              ></v-autocomplete>
+            </v-col>
+
+            <v-col cols="3">
+              <v-text-field
+                v-model="zip_code"
+                :counter="5"
+                label="Zip Code"
+                outlined
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="4">
               <v-text-field
                 v-model="street_address"
                 label="Street Address"
@@ -138,7 +119,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" md="4">
+            <v-col cols="3">
               <v-text-field
                 v-model="phone_number"
                 label="Phone Number"
@@ -146,16 +127,17 @@
               ></v-text-field>
             </v-col>
           </v-row>
-
-          <div class="d-flex justify-center">
-            <v-btn type="submit" :disabled="!addUserFormValid" color="blue"
-              >Add User</v-btn
-            >
-          </div>
+          <v-row>
+            <v-col cols="12" class="d-flex justify-center">
+              <v-btn type="submit" :disabled="!addUserFormValid" color="blue"
+                >Add User</v-btn
+              >
+            </v-col>
+          </v-row>
         </v-form>
-      </v-card>
-    </v-col>
-  </v-row>
+      </v-container>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -217,9 +199,9 @@ export default {
           address
         });
         this.user_added = true;
-        alert("User added.");
+        this.$snack.success("User created!");
       } catch (error) {
-        alert("Error: User already exists.");
+        this.$snack.error("User already exists.");
       }
     }
   }
