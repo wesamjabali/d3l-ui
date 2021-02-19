@@ -3,9 +3,9 @@
     <v-col cols="12">
       <div>
         {{ result }}
-        <br>
+        <br />
         <v-btn v-on:click="test_button"> Send Request </v-btn>
-        <br>
+        <br />
       </div>
     </v-col>
   </v-row>
@@ -13,24 +13,24 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: "Home",
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
-    },
+    }
   },
   data() {
     return {
-      result: ''
-    }
+      result: ""
+    };
   },
   methods: {
-      async test_button() {
-        await this.$axios.get('/admin/user/test')
-        .then((res) => this.result = res.data.message)
-        .catch(() => this.result = 'You don\'t have permission!');
-        
-      }
-    },
-  };
+    async test_button() {
+      await this.$axios
+        .get("/admin/user/test")
+        .then(res => (this.result = res.data.message))
+        .catch(() => (this.result = "You don't have permission!"));
+    }
+  }
+};
 </script>
