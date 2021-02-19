@@ -8,10 +8,9 @@ export default {
   data() {
     return {
       error: false,
-      message: '',
+      message: ""
     };
-  },
-
+  }
 };
 </script>
 
