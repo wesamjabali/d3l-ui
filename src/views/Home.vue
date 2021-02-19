@@ -1,19 +1,27 @@
 <template>
-  <v-row class="justify-center">
-    <v-col cols="12">
-      <div>
-        {{ result }}
-        <br />
-        <v-btn v-on:click="test_button"> Send Request </v-btn>
-        <br />
-      </div>
-    </v-col>
-  </v-row>
+  <div>
+    <NewCourse v-if="new_course" @done="new_course = false" />
+    <v-row class="justify-center">
+      <v-col cols="12">
+        <div>
+          {{ result }}
+          <br />
+          <v-btn v-on:click="test_button"> Send Request </v-btn>
+          <br />
+        </div>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
+import NewCourse from "@/components/NewCourse";
+
 export default {
   name: "Home",
+  components: {
+    NewCourse
+  },
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
@@ -21,14 +29,16 @@ export default {
   },
   data() {
     return {
-      result: ""
+      result: "",
+      new_course: false
     };
   },
   methods: {
     async test_button() {
+      this.new_course = true;
       await this.$axios
-        .get("/admin/user/test")
-        .then(res => (this.result = res.data.message))
+        .get("/admin/user/getAllUsers")
+        .then(res => (this.result = res.data))
         .catch(() => (this.result = "You don't have permission!"));
     }
   }
