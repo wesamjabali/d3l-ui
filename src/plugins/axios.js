@@ -1,20 +1,24 @@
 const Axios = require("axios");
-const store = require("../store");
+import store from "../store";
 
 const baseURL = {
   development: "http://localhost:3333/app",
-  production: "https://cbs-backend.herokuapp.com/app"
+  production: "https://csc394-5.herokuapp.com/app"
 };
 
 const axios = Axios.create({
   baseURL: baseURL[process.env.NODE_ENV]
 });
-console.log(process.env.NODE_ENV);
 
 // Add a request interceptor
 axios.interceptors.request.use(
   config => {
-    //console.log("config", config);
+    
+    const token = localStorage.getItem("token");
+    if(token) {
+      config.headers['Authorization'] = 'Bearer ' + token;
+    }
+    console.log(config)
     return config;
   },
   error => {
@@ -32,11 +36,10 @@ axios.interceptors.response.use(
     console.log("error", error.response.status);
     // failed response interceptor (status codes 300+)
     if (error.response.status == 401) {
-      console.log("store", store);
       store.default.dispatch("logout");
     }
     return Promise.reject(error);
   }
 );
 
-module.exports = axios;
+export default axios;

@@ -14,8 +14,11 @@ const state = {
 
 const getters = {
   isLoggedIn: state => !!state.token,
-  email: state => state.user.email || "",
-  roles: state => state.user.roles || []
+  token : state => state.token || null,
+  email: state => state.user.email || '',
+  roles: state => state.user.roles || [],
+  first_name: state => state.user.first_name || '',
+  last_name: state => state.user.last_name || ''
 };
 
 const actions = {
@@ -49,7 +52,6 @@ const actions = {
     commit
   }) {
     // clear user auth
-    delete axios.defaults.headers.common.authorization;
     localStorage.removeItem("token");
     commit("clearUser");
     router.push("/");
@@ -60,8 +62,6 @@ const actions = {
   }, {
     token
   }) {
-    // handle axios header update
-    axios.defaults.headers.common.authorization = "Bearer " + token;
     // handle localstorage updates
     localStorage.setItem("token", token);
     const user = jwtDecode(token);
@@ -72,15 +72,12 @@ const actions = {
     });
   },
 
-  initializeApp({
-    dispatch
-  }) {
+  initializeApp({dispatch}) {
     // handle main init logic
     const storageToken = localStorage.getItem("token") || "";
     if (storageToken) {
       const user = jwtDecode(storageToken);
       const remainingTime = user.exp - Math.floor(Date.now() / 1000);
-      // console.log("TCL: initializeApp -> remainingTime", remainingTime);
       // If initialized and stored token has more than 2 hours left, use same token
       // otherwise, attempt refresh
       if (remainingTime > 7200) {
@@ -97,7 +94,7 @@ const mutations = {
   setUser: (state, payload) => {
     state.token = payload.token;
     state.user = payload.user;
-    state.roles = payload.user.roles;
+    state.roles = payload.roles;
     return state;
   },
   clearUser: state => {

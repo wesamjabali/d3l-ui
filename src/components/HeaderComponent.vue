@@ -1,44 +1,29 @@
 <template>
-  <div>
-    <v-app-bar color="#6A76AB"
-        dark
-        shrink-on-scroll
-        app
-        src="https://picsum.photos/1920/1080?random"
-        fade-img-on-scroll
-        scroll-target="#scrolling-techniques-3">
-      <v-app-bar-nav-icon
-        @click="drawer = !drawer"
-      ></v-app-bar-nav-icon>
-      <v-toolbar-title class="white--text">D3L</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <div v-if="isLoggedIn">
-        <v-toolbar-items>
-          <v-btn text>
+  <div v-if="isLoggedIn">
+    <v-app-bar app color="#6A76AB" dark>
+    <v-app-bar-nav-icon
+      @click="drawer = !drawer"
+    ></v-app-bar-nav-icon>
+    <v-toolbar-title class="white--text">D3L</v-toolbar-title>
+    <v-spacer></v-spacer>
+        <v-btn text>
           Faculty Support
         </v-btn>
-        <v-btn text>
+        <v-btn text class="ml-2">
           Technical Support
         </v-btn>
-        <v-btn text>
+        <v-btn text class="ml-2">
           Course Evaluations
         </v-btn>
-        <v-btn color="white" outlined>
+        <v-btn color="white" outlined class="ml-7">
           <v-icon left>
             mdi-account-circle
           </v-icon>
-          {{ email }}
+          {{ this.$store.getters.first_name + ' ' + this.$store.getters.last_name }}
         </v-btn>
-        </v-toolbar-items>
-      </div>
     </v-app-bar>
 
-    <v-navigation-drawer 
-          absolute
-          dark
-          src= "../assets/side.jpg"
-          v-model="drawer" 
-          app>
+    <v-navigation-drawer app v-model="drawer">
       <div class="pa-4 title">
         Main Navigation
       </div>
