@@ -1,5 +1,5 @@
 <template>
-  <v-snackbar :color="type" text transition="slide-y-reverse-transition" v-model="show">
+  <v-snackbar :color="type" text transition="slide-y-reverse-transition" top v-model="show">
     {{ message }}
     <template v-slot:action="">
       <v-btn text @click="show = false">
