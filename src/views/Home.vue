@@ -38,8 +38,8 @@ export default {
       this.new_course = true;
       await this.$axios
         .get("/admin/user/getAllUsers")
-        .then(res => (this.result = res.data))
-        .catch(() => (this.result = "You don't have permission!"));
+        .then(res => (console.log(res.data)))
+        .catch(() => (console.log("You don't have permission!")));
     }
   }
 };
