@@ -8,43 +8,43 @@
         >
         </v-img>
         <v-card-title class="justify-center">Login</v-card-title>
-          <v-form @submit.prevent="login()" ref="loginForm" class="px-10 pb-5">
-            <v-text-field
-              outlined
-              v-model="email"
-              label="E-Mail"
-              name="email"
-              type="text"
-            ></v-text-field>
-            <v-text-field
-              outlined
-              v-model="password"
-              name="password"
-              type="password"
-              label="Password"
-              :rules="[loginRules.wrong]"
-            ></v-text-field>
-            <div class="py-4 d-flex justify-center">
-              <v-btn
-                :loading="buttonLoading"
-                :disabled="buttonLoading"
-                :width="$vuetify.breakpoint.xsOnly ? '40vw' : '140px'"
-                type="submit"
-                color="blue"
-                >login</v-btn
-              >
-            </div>
-            <div class="d-flex justify-center">
-              <v-btn
-                :loading="buttonLoading"
-                :disabled="buttonLoading"
-                :width="$vuetify.breakpoint.xsOnly ? '40vw' : '140px'"
-                color="gray"
-                to="/register"
-                >Register</v-btn
-              >
-            </div>
-          </v-form>
+        <v-form @submit.prevent="login()" ref="loginForm" class="px-10 pb-5">
+          <v-text-field
+            outlined
+            v-model="email"
+            label="E-Mail"
+            name="email"
+            type="text"
+          ></v-text-field>
+          <v-text-field
+            outlined
+            v-model="password"
+            name="password"
+            type="password"
+            label="Password"
+            :rules="[loginRules.wrong]"
+          ></v-text-field>
+          <div class="py-4 d-flex justify-center">
+            <v-btn
+              :loading="buttonLoading"
+              :disabled="buttonLoading"
+              :width="$vuetify.breakpoint.xsOnly ? '40vw' : '140px'"
+              type="submit"
+              color="blue"
+              >login</v-btn
+            >
+          </div>
+          <div class="d-flex justify-center">
+            <v-btn
+              :loading="buttonLoading"
+              :disabled="buttonLoading"
+              :width="$vuetify.breakpoint.xsOnly ? '40vw' : '140px'"
+              color="gray"
+              to="/register"
+              >Register</v-btn
+            >
+          </div>
+        </v-form>
       </v-card>
     </v-col>
   </v-row>
@@ -60,8 +60,8 @@ export default {
       loginError: false,
       buttonLoading: false,
       loginRules: {
-        wrong: () => !this.loginError || "email or password is incorrect."
-      }
+        wrong: () => !this.loginError || "email or password is incorrect.",
+      },
     };
   },
   watch: {
@@ -72,7 +72,7 @@ export default {
     password() {
       this.loginError = false;
       this.$refs.loginForm.validate();
-    }
+    },
   },
   methods: {
     async login() {
@@ -88,7 +88,7 @@ export default {
         this.$refs.loginForm.validate();
         this.buttonLoading = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>

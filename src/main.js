@@ -8,6 +8,7 @@ import vuetify from "./plugins/vuetify";
 // Attach axios
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
+
 Vue.prototype.$snack = {
   success: (message = "Success!") => {
     store.commit("snack", { message: message, type: "success" });
