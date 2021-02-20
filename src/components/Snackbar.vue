@@ -1,8 +1,9 @@
 <template>
   <div>
     <v-snackbar
-      :color="type"
+      app
       text
+      :color="type"
       :transition="
         $vuetify.breakpoint.xsOnly
           ? 'slide-y-reverse-transition'
