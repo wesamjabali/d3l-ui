@@ -22,17 +22,21 @@
           item-value="id"
         >
         </v-autocomplete>
-        <v-autocomplete
+        <v-select
           label="Roles"
           :rules="required"
           outlined
           :items="role_items"
-          :item-value="(values) => (roles = toLowerCase(values))"
           multiple
           small-chips
           deletable-chips
+          @change="
+            (input_roles) => {
+              roles = toLowerCase(input_roles);
+            }
+          "
         >
-        </v-autocomplete>
+        </v-select>
       </v-form>
       <v-card-actions>
         <v-spacer />
