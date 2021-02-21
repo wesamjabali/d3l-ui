@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <v-snackbar
-      app
-      text
-      :color="type"
-      :transition="
-        $vuetify.breakpoint.xsOnly
-          ? 'slide-y-reverse-transition'
-          : 'slide-y-transition'
-      "
-      :top="!$vuetify.breakpoint.xsOnly"
-      :bottom="$vuetify.breakpoint.xsOnly"
-      v-model="show"
-    >
-      {{ message }}
-      <template v-slot:action="">
-        <v-btn text @click="show = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-  </div>
+  <v-snackbar
+    app
+    text
+    :color="type"
+    :transition="
+      $vuetify.breakpoint.xsOnly
+        ? 'slide-y-reverse-transition'
+        : 'slide-y-transition'
+    "
+    :bottom="$vuetify.breakpoint.xsOnly"
+    :top="!$vuetify.breakpoint.xsOnly"
+    v-model="show"
+  >
+    {{ message }}
+    <template v-slot:action="">
+      <v-btn text @click="show = false">
+        Close
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>

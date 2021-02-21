@@ -5,9 +5,7 @@
       <v-col cols="12">
         <div>
           {{ result }}
-          <br />
           <v-btn v-on:click="test_button"> Send Request </v-btn>
-          <br />
         </div>
       </v-col>
     </v-row>
