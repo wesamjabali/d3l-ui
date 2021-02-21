@@ -8,6 +8,7 @@
         ? 'slide-y-reverse-transition'
         : 'slide-y-transition'
     "
+    id="root"
     :bottom="$vuetify.breakpoint.xsOnly"
     :top="!$vuetify.breakpoint.xsOnly"
     v-model="show"
@@ -38,6 +39,18 @@ export default {
     },
     type() {
       return this.$store.state.snack_type;
+    },
+  },
+  created() {
+    window.addEventListener("resize", this.reposition_snackbar);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.reposition_snackbar);
+  },
+  methods: {
+    reposition_snackbar() {
+      const root = document.getElementById("root");
+      root.style.height = `${window.innerHeight}px`;
     },
   },
 };
