@@ -8,7 +8,7 @@
         ? 'slide-y-reverse-transition'
         : 'slide-y-transition'
     "
-    id="root"
+    id="snack_id"
     :bottom="$vuetify.breakpoint.xsOnly"
     :top="!$vuetify.breakpoint.xsOnly"
     v-model="show"
@@ -49,8 +49,8 @@ export default {
   },
   methods: {
     reposition_snackbar() {
-      const root = document.getElementById("root");
-      root.style.height = `${window.innerHeight}px`;
+      const snack = document.getElementById("snack_id");
+      snack.style.height = `${window.innerHeight}px`;
     },
   },
 };
