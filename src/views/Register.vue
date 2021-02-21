@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex justify-center">
-    <v-card class="ma-6 pa-6" width="90vw" color="#f2f2f2">
+    <v-card class="ma-6 pa-6" width="90vw">
       <v-row>
         <v-col cols="12" class="d-flex justify-center">
           <div class="title">
@@ -163,17 +163,17 @@ export default {
 
       addUserFormValid: false,
       emailRules: [
-        (v) => !!v || "E-mail is required",
+        (v) => !!v || "This field is required",
         (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
       passwordRules: [
-        (v) => !!v || "Password is required",
+        (v) => !!v || "This field is required",
         (v) =>
           (v && v.length >= 6) || "Password must be greater than 6 characters",
       ],
       password_confirm_rules: [
         (v) => !!v || "This field is required",
-        (v) => v == this.password || "Password not confirmed",
+        (v) => v == this.password || "Passwords don't match",
       ],
       phone_number_rules: [
         (v) => !!v || "This field is required",
