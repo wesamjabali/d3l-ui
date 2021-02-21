@@ -15,6 +15,7 @@
             label="E-Mail"
             name="email"
             type="text"
+            :rules="required"
           ></v-text-field>
           <v-text-field
             outlined
@@ -22,7 +23,7 @@
             name="password"
             type="password"
             label="Password"
-            :rules="[loginRules.wrong]"
+            :rules="required"
           ></v-text-field>
           <div class="py-4 d-flex justify-center">
             <v-btn
@@ -57,35 +58,24 @@ export default {
     return {
       email: "",
       password: "",
-      loginError: false,
       buttonLoading: false,
-      loginRules: {
-        wrong: () => !this.loginError || "email or password is incorrect.",
-      },
+      required: [(v) => !!v || "This field is required"],
     };
-  },
-  watch: {
-    email() {
-      this.loginError = false;
-      this.$refs.loginForm.validate();
-    },
-    password() {
-      this.loginError = false;
-      this.$refs.loginForm.validate();
-    },
   },
   methods: {
     async login() {
+      if (!this.$refs.loginForm.validate()) {
+        return;
+      }
+
       this.buttonLoading = true;
       try {
         let email = this.email.toLowerCase();
         let password = this.password;
-
         await this.$store.dispatch("login", { email, password });
         this.$router.push("/home");
       } catch (error) {
-        this.loginError = true;
-        this.$refs.loginForm.validate();
+        this.$snack.error("E-mail or password is incorrect");
         this.buttonLoading = false;
       }
     },

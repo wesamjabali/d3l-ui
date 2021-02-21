@@ -23,7 +23,7 @@
                 counter="100"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="4">
+            <v-col cols="12" sm="4">
               <v-text-field
                 outlined
                 label="Prefix"
@@ -32,7 +32,7 @@
                 :rules="course_rules"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="4">
+            <v-col cols="12" sm="4">
               <v-text-field
                 outlined
                 label="Number"
@@ -42,7 +42,7 @@
                 :rules="course_rules"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="4">
+            <v-col cols="12" sm="4">
               <v-text-field
                 outlined
                 label="Section"
@@ -75,17 +75,16 @@ export default {
       course_prefix: "",
       course_number: "",
       section_number: "",
-      snack_message: "",
 
       title_rules: [
-        v => !!v || "Title is required",
-        v => (v && v.length > 6) || "Title must be greater than 6 characters",
-        v => v && v.length <= 100
+        (v) => !!v || "Title is required",
+        (v) => (v && v.length > 6) || "Title must be greater than 6 characters",
+        (v) => v && v.length <= 100,
       ],
       course_rules: [
-        v => !!v || "This field is required",
-        v => v && v.length == 3
-      ]
+        (v) => !!v || "This field is required",
+        (v) => v && v.length == 3,
+      ],
     };
   },
   methods: {
@@ -103,16 +102,16 @@ export default {
           title,
           course_prefix,
           course_number,
-          section_number
+          section_number,
         })
         .then(() => {
-          this.$snack.success(title + " added!")
+          this.$snack.success(title + " added!");
           this.$emit("done");
         })
         .catch(() => {
           this.$snack.error("Course already exists!");
         });
-    }
-  }
+    },
+  },
 };
 </script>

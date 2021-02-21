@@ -32,13 +32,6 @@
             </v-list-item-icon>
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
-
-          <v-list-item v-if="isAdmin" to="/addRole">
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Add Role</v-list-item-title>
-          </v-list-item>
         </v-list-item-group>
       </v-list>
       <div class="pa-4" v-if="isLoggedIn">
