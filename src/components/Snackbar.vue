@@ -43,24 +43,17 @@ export default {
       return this.$store.state.snack_type;
     },
   },
-  // created() {
-  //   window.addEventListener("resize", this.reposition_snackbar);
-  // },
-  // beforeDestroy() {
-  //   window.removeEventListener("resize", this.reposition_snackbar);
-  // },
-  // methods: {
-  //   reposition_snackbar() {
-  //     const snack = document.getElementById("snack_id");
-  //     snack.style.height = `${window.innerHeight}px`;
-  //   },
-  // },
+  created() {
+    window.addEventListener("resize", this.reposition_snackbar);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.reposition_snackbar);
+  },
+  methods: {
+    reposition_snackbar() {
+      const snack = document.getElementById("snack_id");
+      snack.style.height = `${window.innerHeight}px`;
+    },
+  },
 };
 </script>
-<style>
-@media (max-width: 500px) {
-  .snack_class {
-    height: 100vh;
-  }
-}
-</style>
