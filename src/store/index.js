@@ -48,7 +48,7 @@ const actions = {
     localStorage.removeItem("token");
     commit("clearUser");
     router.push("/");
-    commit("snack", { type: "success", message: "Goodbye!" });
+    commit("snack", { type: "grey darken-4", message: "Logged out." });
   },
 
   setUser({ commit }, { token }) {

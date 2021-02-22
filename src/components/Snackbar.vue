@@ -9,8 +9,6 @@
         : 'slide-y-transition'
     "
     id="snack_id"
-    class="snack_class"
-    
     :bottom="$vuetify.breakpoint.xsOnly"
     :top="!$vuetify.breakpoint.xsOnly"
     v-model="show"
