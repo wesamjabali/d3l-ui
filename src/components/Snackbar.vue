@@ -9,6 +9,8 @@
         : 'slide-y-transition'
     "
     id="snack_id"
+    class="snack_class"
+    
     :bottom="$vuetify.breakpoint.xsOnly"
     :top="!$vuetify.breakpoint.xsOnly"
     v-model="show"
@@ -41,17 +43,12 @@ export default {
       return this.$store.state.snack_type;
     },
   },
-  created() {
-    window.addEventListener("resize", this.reposition_snackbar);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.reposition_snackbar);
-  },
-  methods: {
-    reposition_snackbar() {
-      const snack = document.getElementById("snack_id");
-      snack.style.height = `${window.innerHeight}px`;
-    },
-  },
 };
 </script>
+<style>
+@media (max-width: 320px) {
+  .snack_class {
+    height: 100vh;
+  }
+}
+</style>
