@@ -11,7 +11,7 @@
           <v-btn v-on:click="new_course = true">New Course</v-btn>
           <v-btn v-on:click="add_role = true">Add Role</v-btn>
           <v-btn v-on:click="add_course = true">Add Course</v-btn>
-          <v-btn v-on:click="$snack.success('Snackbar!')">SnackBar</v-btn>
+          <v-btn v-on:click="$snack.info('Snackbar!')">SnackBar</v-btn>
         </div>
       </v-col>
     </v-row>
