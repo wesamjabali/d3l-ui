@@ -14,11 +14,12 @@
           <v-btn v-on:click="add_course = true">Add Course</v-btn>
           <v-btn v-on:click="new_team = true">New Team</v-btn>
           <v-btn v-on:click="$snack.info('Snackbar!')">SnackBar</v-btn>
+          <v-btn v-on:click="test_button">Send Test Request</v-btn>
           <br />
           <v-row v-for="item in mylist" :key="item.letter">
             <v-col cols="12">
               <v-card width="50px" height="50px">
-                <v-title-card>{{ item.letter }}</v-title-card>
+                {{ item.letter }}
               </v-card>
             </v-col>
           </v-row>
@@ -59,9 +60,8 @@ export default {
   },
   methods: {
     async test_button() {
-      this.new_course = true;
       await this.$axios
-        .get("/admin/user/getAllUsers")
+        .get("/faculty/course/getAllCourses")
         .then((res) => console.log(res.data))
         .catch(() => console.log("You don't have permission!"));
     },
