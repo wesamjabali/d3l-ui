@@ -69,7 +69,6 @@ export default {
   name: "NewCourse",
   data() {
     return {
-      error: false,
       dialog: true,
       title: "",
       course_prefix: "",
