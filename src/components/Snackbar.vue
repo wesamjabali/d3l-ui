@@ -11,14 +11,10 @@
     id="snack_id"
     :bottom="$vuetify.breakpoint.xsOnly"
     :top="!$vuetify.breakpoint.xsOnly"
+    v-on:click.native="show = false"
     v-model="show"
   >
-    {{ message }}
-    <template v-slot:action="">
-      <v-btn text @click="show = false">
-        Close
-      </v-btn>
-    </template>
+    <div class="d-flex justify-center">{{ message }}</div>
   </v-snackbar>
 </template>
 

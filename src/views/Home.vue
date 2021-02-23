@@ -3,6 +3,7 @@
     <NewCourse v-if="new_course" @done="new_course = false" />
     <AddRole v-if="add_role" @done="add_role = false" />
     <AddCourse v-if="add_course" @done="add_course = false" />
+    <NewTeam v-if="new_team" @done="new_team = false" />
 
     <v-row class="justify-center">
       <v-col cols="12">
@@ -11,7 +12,16 @@
           <v-btn v-on:click="new_course = true">New Course</v-btn>
           <v-btn v-on:click="add_role = true">Add Role</v-btn>
           <v-btn v-on:click="add_course = true">Add Course</v-btn>
+          <v-btn v-on:click="new_team = true">New Team</v-btn>
           <v-btn v-on:click="$snack.info('Snackbar!')">SnackBar</v-btn>
+          <br />
+          <v-row v-for="item in mylist" :key="item.letter">
+            <v-col cols="12">
+              <v-card width="50px" height="50px">
+                <v-title-card>{{ item.letter }}</v-title-card>
+              </v-card>
+            </v-col>
+          </v-row>
         </div>
       </v-col>
     </v-row>
@@ -22,6 +32,7 @@
 import NewCourse from "@/components/Admin/NewCourse";
 import AddRole from "@/components/Admin/AddRole";
 import AddCourse from "@/components/Admin/AddCourse";
+import NewTeam from "@/components/Faculty/NewTeam";
 
 export default {
   name: "Home",
@@ -29,6 +40,7 @@ export default {
     NewCourse,
     AddRole,
     AddCourse,
+    NewTeam,
   },
   computed: {
     isLoggedIn() {
@@ -38,9 +50,11 @@ export default {
   data() {
     return {
       result: "",
+      mylist: [{ letter: "a" }, { letter: "b" }, { letter: "c" }],
       new_course: false,
       add_role: false,
       add_course: false,
+      new_team: false,
     };
   },
   methods: {
