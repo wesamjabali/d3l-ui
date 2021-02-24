@@ -8,7 +8,7 @@
       <v-toolbar-title class="white--text">D3L</v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="isLoggedIn">
-        <v-btn color="white" outlined class="ml-7">
+        <v-btn color="white" outlined class="ml-7" to="/profile">
           <v-icon left>
             mdi-account-circle
           </v-icon>
