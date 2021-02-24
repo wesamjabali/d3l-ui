@@ -26,7 +26,7 @@
           v-model="course_id"
           :items="all_courses"
           item-text="title"
-          item-value="course_id"
+          item-value="id"
           small-chips
           deletable-chips
         >
@@ -64,6 +64,7 @@ export default {
       }
       const team_name = this.team_name;
       const course_id = this.course_id;
+      console.log(course_id)
 
       await this.$axios
         .post("/faculty/team/new", {
