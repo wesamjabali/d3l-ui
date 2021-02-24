@@ -5,6 +5,7 @@
     <AddCourse v-if="add_course" @done="add_course = false" />
     <NewTeam v-if="new_team" @done="new_team = false" />
     <AddTeamMember v-if="add_team_member" @done="add_team_member = false" />
+    <NewContent v-if="new_content" @done="new_content = false" />
 
     <v-row class="justify-center">
       <v-col cols="12">
@@ -15,6 +16,7 @@
           <v-btn v-on:click="add_course = true">Add Course</v-btn>
           <v-btn v-on:click="new_team = true">New Team</v-btn>
           <v-btn v-on:click="add_team_member = true">Add Team Member</v-btn>
+          <v-btn v-on:click="new_content = true">New Content</v-btn>
           <v-btn v-on:click="$snack.info('Snackbar!')">SnackBar</v-btn>
           <br />
           <v-row v-for="item in mylist" :key="item.letter">
@@ -36,6 +38,7 @@ import AddRole from "@/components/Admin/AddRole";
 import AddCourse from "@/components/Admin/AddCourse";
 import NewTeam from "@/components/Faculty/NewTeam";
 import AddTeamMember from "@/components/Faculty/AddTeamMember";
+import NewContent from "@/components/Faculty/NewContent";
 
 export default {
   name: "Home",
@@ -45,6 +48,7 @@ export default {
     AddCourse,
     NewTeam,
     AddTeamMember,
+    NewContent,
   },
   computed: {
     isLoggedIn() {
@@ -60,6 +64,7 @@ export default {
       add_course: false,
       new_team: false,
       add_team_member: false,
+      new_content: false,
     };
   },
   methods: {
