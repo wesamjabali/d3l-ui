@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Login from "@/views/Login.vue";
 import Home from "@/views/Home.vue";
 import Register from "@/views/Register.vue";
+import Profile from "@/views/Profile.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -30,6 +31,11 @@ const routes = [
     path: "/home",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile
   },
   {
     path: "*",
