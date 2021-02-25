@@ -6,11 +6,16 @@
     <NewTeam v-if="new_team" @done="new_team = false" />
     <AddTeamMember v-if="add_team_member" @done="add_team_member = false" />
     <NewContent v-if="new_content" @done="new_content = false" />
+    <DropDown1  />
+    
 
     <v-row class="justify-center">
       <v-col cols="12">
         <div>
           {{ result }}
+
+          
+
           <v-btn v-on:click="new_course = true">New Course</v-btn>
           <v-btn v-on:click="add_role = true">Add Role</v-btn>
           <v-btn v-on:click="add_course = true">Add Course</v-btn>
@@ -39,6 +44,8 @@ import AddCourse from "@/components/Admin/AddCourse";
 import NewTeam from "@/components/Faculty/NewTeam";
 import AddTeamMember from "@/components/Faculty/AddTeamMember";
 import NewContent from "@/components/Faculty/NewContent";
+import DropDown1 from "@/components/DropDown1";
+
 
 export default {
   name: "Home",
@@ -49,6 +56,7 @@ export default {
     NewTeam,
     AddTeamMember,
     NewContent,
+    DropDown1,
   },
   computed: {
     isLoggedIn() {
