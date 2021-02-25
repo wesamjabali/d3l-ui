@@ -23,7 +23,7 @@
           label="Course"
           :rules="required"
           outlined
-          v-model="courses"
+          v-model="course_id"
           :items="all_courses"
           item-text="title"
           item-value="id"
@@ -48,7 +48,7 @@ export default {
     return {
       dialog: true,
       all_courses: [],
-      courses: "",
+      course_id: "",
       team_name: "",
       required: [(v) => !!v || "This field is required"],
     };
@@ -58,28 +58,26 @@ export default {
   },
   methods: {
     async submit() {
+
       if (!this.$refs.form.validate()) {
         return;
       }
-      if (this.courses.length == 0) {
-        this.$snack.error("Select a course");
-        return;
-      }
-      const courses = this.courses;
-      const user_id = this.user_id;
+      const team_name = this.team_name;
+      const course_id = this.course_id;
+      console.log(course_id)
 
       await this.$axios
-        .post("/admin/user/addCourse", {
-          courses,
-          user_id,
+        .post("/faculty/team/new", {
+          team_name,
+          course_id,
         })
         .then(() => {
-          this.$snack.success("Course added!");
+          this.$snack.success("Team added!");
           this.$emit("done");
         })
         .catch((err) => {
           if (err.response.status) {
-            this.$snack.error("Course already exists");
+            this.$snack.error("Team already exists");
           } else {
             this.$snack.error("An error occurred");
           }
@@ -87,7 +85,7 @@ export default {
     },
     async get_all_courses() {
       await this.$axios
-        .get("/faculty/course/getAllCourses")
+        .get("/user/course/getAllCourses")
         .then((res) => {
           this.all_courses = res.data.courses;
         })
