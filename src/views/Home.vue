@@ -14,10 +14,25 @@
           <v-btn v-on:click="new_course = true">New Course</v-btn>
           <v-btn v-on:click="add_role = true">Add Role</v-btn>
           <v-btn v-on:click="add_course = true">Add Course</v-btn>
-          <v-btn v-on:click="new_team = true">New Team</v-btn>
-          <v-btn v-on:click="add_team = true">Add Team</v-btn>
           <v-btn v-on:click="file_test = true">File Test</v-btn>
 
+          <v-menu>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                Manage teams
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item
+                v-for="item in mylist"
+                :key="item.name"
+                @click="test_button(item)"
+              >
+                <v-list-item-title>{{ item.name }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
 
           <v-btn v-on:click="$snack.info('Snackbar!')">SnackBar</v-btn>
           <v-btn v-on:click="test_button">Send Test Request</v-btn>
@@ -31,10 +46,13 @@
             Delete team
           </v-btn>
           <br />
-          <v-row v-for="item in mylist" :key="item.letter">
-            <v-col cols="12">
-              <v-card width="50px" height="50px">
-                {{ item.letter }}
+          <v-row>
+            <v-col v-for="c in courses" :key="c.code" cols="6" sm="4">
+              <v-card class="mx-auto">
+                <v-card-title> {{ c.name }} </v-card-title>
+                <v-card-subtitle>
+                  {{ c.code }}
+                </v-card-subtitle>
               </v-card>
             </v-col>
           </v-row>
@@ -51,7 +69,6 @@ import AddCourse from "@/components/Admin/AddCourse";
 import NewTeam from "@/components/Faculty/NewTeam";
 import AddTeam from "@/components/Faculty/AddTeam";
 import FileTest from "@/components/Faculty/FileTest";
-
 
 export default {
   name: "Home",
@@ -71,7 +88,19 @@ export default {
   data() {
     return {
       result: "",
-      mylist: [{ letter: "a" }, { letter: "b" }, { letter: "c" }],
+      mylist: [
+        { name: "Create New Team", action: "newteam" },
+        { name: "Add Team Member", action: "addmember" },
+      ],
+      courses: [
+        { name: "CLASS ONE", code: "CSC 394 801" },
+        { name: "CLASS TWO", code: "CSC 102 293" },
+        { name: "CLASS ONE", code: "CSC 394 802" },
+        { name: "CLASS TWO", code: "CSC 102 294" },
+        { name: "CLASS ONE", code: "CSC 394 804" },
+        { name: "CLASS TWO", code: "CSC 102 297" },
+      ],
+      selected: "",
       new_course: false,
       add_role: false,
       add_course: false,
@@ -81,11 +110,12 @@ export default {
     };
   },
   methods: {
-    async test_button() {
-      await this.$axios
-        .get("/faculty/course/getAllCourses")
-        .then((res) => console.log(res.data))
-        .catch(() => console.log("You don't have permission!"));
+    async test_button(item) {
+      if (item.action == "newteam") {
+        this.new_team = true;
+      } else if (item.action == "addmember") {
+        this.add_team = true;
+      }
     },
   },
 };
