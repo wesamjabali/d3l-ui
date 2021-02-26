@@ -1,54 +1,37 @@
-<template>
-  <div>
-    <NewCourse v-if="new_course" @done="new_course = false" />
-    <AddRole v-if="add_role" @done="add_role = false" />
-    <AddCourse v-if="add_course" @done="add_course = false" />
-    <NewTeam v-if="new_team" @done="new_team = false" />
-    <AddTeam v-if="add_team" @done="add_team = false" />
-    <FileTest v-if="file_test" @done="file_test = false" />
+<template> 
 
-    <v-row class="justify-center">
-      <v-col cols="12">
-        <div>
-          {{ result }}
-          <v-btn v-on:click="new_course = true">New Course</v-btn>
-          <v-btn v-on:click="add_role = true">Add Role</v-btn>
-          <v-btn v-on:click="add_course = true">Add Course</v-btn>
-          <v-btn v-on:click="file_test = true">File Test</v-btn>
+  <v-card
+    @click.native="get_all_courses()"
+    class="mx-auto"
+    max-width="1000"
+  >
+    <v-img
+      src="https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ"
+      height="100px"
+    ></v-img>
 
-          <v-menu>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                Manage teams
-              </v-btn>
-            </template>
+    <v-card-title class="justify-center">
+     My Courses
+    </v-card-title>
 
-            <v-list>
-              <v-list-item
-                v-for="item in mylist"
-                :key="item.name"
-                @click="test_button(item)"
-              >
-                <v-list-item-title>{{ item.name }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-
-          <v-btn v-on:click="$snack.info('Snackbar!')">SnackBar</v-btn>
-          <v-btn v-on:click="test_button">Send Test Request</v-btn>
-          <v-btn
-            v-on:click="
-              () => {
-                $axios.post('/faculty/team/delete', { team_id: '1' });
-              }
-            "
-          >
-            Delete team
-          </v-btn>
-          <br />
+      <v-container
+        class="fill-height"
+        fluid
+        style="min-height: 434px"
+      >
+        <v-fade-transition mode="out-in">
           <v-row>
-            <v-col v-for="c in courses" :key="c.code" cols="6" sm="4">
+            <v-col v-for="c in courses" :key="c.code" cols="12" sm="6">
               <v-card class="mx-auto">
+                
+                <v-img 
+                  :src="c.image"
+                  height="125"
+                  
+                  class="grey darken-4"
+                ></v-img>
+
+
                 <v-card-title> {{ c.name }} </v-card-title>
                 <v-card-subtitle>
                   {{ c.code }}
@@ -56,67 +39,49 @@
               </v-card>
             </v-col>
           </v-row>
-        </div>
-      </v-col>
-    </v-row>
-  </div>
+        </v-fade-transition>
+        </v-container>
+
+      <v-spacer></v-spacer>
+
+    
+  </v-card>
+
 </template>
 
 <script>
-import NewCourse from "@/components/Admin/NewCourse";
-import AddRole from "@/components/Admin/AddRole";
-import AddCourse from "@/components/Admin/AddCourse";
-import NewTeam from "@/components/Faculty/NewTeam";
-import AddTeam from "@/components/Faculty/AddTeam";
-import FileTest from "@/components/Faculty/FileTest";
-
 export default {
   name: "Home",
-  components: {
-    NewCourse,
-    AddRole,
-    AddCourse,
-    NewTeam,
-    AddTeam,
-    FileTest,
-  },
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    },
-  },
+  
   data() {
     return {
-      result: "",
-      mylist: [
-        { name: "Create New Team", action: "newteam" },
-        { name: "Add Team Member", action: "addmember" },
-      ],
       courses: [
-        { name: "CLASS ONE", code: "CSC 394 801" },
-        { name: "CLASS TWO", code: "CSC 102 293" },
-        { name: "CLASS ONE", code: "CSC 394 802" },
-        { name: "CLASS TWO", code: "CSC 102 294" },
-        { name: "CLASS ONE", code: "CSC 394 804" },
-        { name: "CLASS TWO", code: "CSC 102 297" },
+        { name: "CLASS ONE", code: "CSC 394 801" , image: "https://picsum.photos/350/165?random=1"},
+        { name: "CLASS TWO", code: "CSC 102 293" , image: "https://picsum.photos/350/165?random=2"},
+        { name: "CLASS THREE", code: "CSC 394 802" , image: "https://picsum.photos/350/165?random=3"},
+        { name: "CLASS FOUR", code: "CSC 102 294" , image: "https://picsum.photos/350/165?random=4"},
+        { name: "CLASS FIVE", code: "CSC 394 804" , image: "https://picsum.photos/350/165?random=5"},
+        { name: "CLASS SIX", code: "CSC 102 297" , image: "https://picsum.photos/350/165?random=6"},
       ],
-      selected: "",
-      new_course: false,
-      add_role: false,
-      add_course: false,
-      new_team: false,
-      add_team: false,
-      file_test: false,
+
+      mounted() {
+        this.get_all_courses();
+      },
+
+      methods:{
+        async get_all_courses() {
+        await this.$axios
+        .get("/admin/course/getAllCourses")
+        .then((res) => {
+          this.all_courses = res.data.courses;
+        })
+        .catch(() => {
+          this.$snack.error("An error occurred");
+          });
+        }
+
+      }
     };
   },
-  methods: {
-    async test_button(item) {
-      if (item.action == "newteam") {
-        this.new_team = true;
-      } else if (item.action == "addmember") {
-        this.add_team = true;
-      }
-    },
-  },
-};
+}
 </script>
