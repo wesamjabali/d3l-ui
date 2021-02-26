@@ -64,7 +64,6 @@ export default {
       }
       const team_name = this.team_name;
       const course_id = this.course_id;
-      console.log(course_id)
 
       await this.$axios
         .post("/faculty/team/new", {

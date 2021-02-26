@@ -12,35 +12,30 @@ const state = {
   user: {},
   snack: false,
   snack_message: "",
-  snack_type: ""
+  snack_type: "",
 };
 
 const getters = {
-  isLoggedIn: state => !!state.token,
-  token: state => state.token || null,
-  email: state => state.user.email || "",
-  roles: state => state.user.roles || [],
-  first_name: state => state.user.first_name || "",
-  last_name: state => state.user.last_name || ""
+  isLoggedIn: (state) => !!state.token,
+  token: (state) => state.token || null,
+  email: (state) => state.user.email || "",
+  roles: (state) => state.user.roles || [],
+  first_name: (state) => state.user.first_name || "",
+  last_name: (state) => state.user.last_name || "",
 };
 
 const actions = {
   async login({ dispatch, commit }, { email, password }) {
-    try {
-      const builtURL = `/non_auth/login`;
-      const { data = {} } = await axios.post(builtURL, {
-        email,
-        password
-      });
-      const { token } = data;
-      dispatch("setUser", {
-        token
-      });
-      commit("snack", { type: "success", message: "Welcome!" });
-    } catch (err) {
-      console.log("login -> err", err);
-      throw err;
-    }
+    const builtURL = `/non_auth/login`;
+    const { data = {} } = await axios.post(builtURL, {
+      email,
+      password,
+    });
+    const { token } = data;
+    dispatch("setUser", {
+      token,
+    });
+    commit("snack", { type: "success", message: "Welcome!" });
   },
 
   logout({ commit }) {
@@ -58,7 +53,7 @@ const actions = {
     // commit user details to vuex
     commit("setUser", {
       token,
-      user
+      user,
     });
   },
 
@@ -73,11 +68,11 @@ const actions = {
       if (remainingTime > 7200) {
         // initialize user if user exists
         dispatch("setUser", {
-          token: storageToken
+          token: storageToken,
         });
       }
     }
-  }
+  },
 };
 
 const mutations = {
@@ -87,7 +82,7 @@ const mutations = {
     state.roles = payload.roles;
     return state;
   },
-  clearUser: state => {
+  clearUser: (state) => {
     state.token = "";
     state.user = {};
     state.roles = [];
@@ -102,7 +97,7 @@ const mutations = {
   snack_toggle: (state, payload) => {
     state.snack = payload;
     return state;
-  }
+  },
 };
 
 export default new Vuex.Store({
@@ -110,5 +105,5 @@ export default new Vuex.Store({
   getters,
   mutations,
   actions,
-  plugins: [createPersistedState()]
+  plugins: [createPersistedState()],
 });

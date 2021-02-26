@@ -1,44 +1,42 @@
 <template>
   <v-card
-    :class="['mx-auto', mobile_user ? 'px-8' : 'px-0']"
+    :class="['mx-auto', 'pb-5']"
     :width="mobile_user ? '100vw' : '90vw'"
-    min-height="90vh"
+    elevation="0"
   >
-    <v-card-title class="justify-center">
-      <div :class="mobile_user ? 'text-h5' : 'text-h4'">
+    <div class="text-center title py-2">
+      <div>
         {{ course.title }}
       </div>
-    </v-card-title>
-    <v-card-subtitle class="text-center">
-      <div>
+      <div class="subtitle-1">
         {{ course.course_prefix }}-{{ course.course_number }}-{{
           course.section_number
         }}
       </div>
-    </v-card-subtitle>
-    <v-divider />
+    </div>
 
     <v-row>
       <v-col cols="12" md="4">
-        <v-card height="100vh">
-          <v-card-title class="justify-center">Content</v-card-title>
-          <v-card-subtitle class="text-center"
-            >Click to Download</v-card-subtitle
-          >
+        <v-card class="pb-5" outlined>
+          <div class="primary white--text mb-5 py-2">
+            <div class="title text-center">Content</div>
+            <div class="subtitle-2 text-center">Click to Download</div>
+          </div>
 
-          <v-col cols="12"> <v-divider /> </v-col>
           <v-card
-            class="mx-5 mb-5"
+            :class="[!mobile_user ? 'mx-5' : 'mx-3', 'mb-5']"
             outlined
-            tile
             hover
             v-for="item in content"
             :key="item.id"
             @click="getFile(item.id)"
           >
-            <v-card-title>{{ item.title }}</v-card-title>
-            <v-card-subtitle> {{ item.body }} </v-card-subtitle>
-            <v-card-actions class="justify-end">
+            <div class="title secondary white--text text-center py-2">
+              {{ item.title }}
+            </div>
+
+            <div class="subtitle-2 mx-5 mt-2">{{ item.body }}</div>
+            <v-card-actions class="justify-end mb-n2">
               <v-switch disabled v-model="item.is_graded" label="Graded">
               </v-switch>
             </v-card-actions>
@@ -47,52 +45,38 @@
       </v-col>
 
       <v-col cols="12" md="4">
-        <v-card height="100vh">
-          <v-card-title class="justify-center">{{ team_name }}</v-card-title>
-          <v-card-subtitle class="text-center">Members</v-card-subtitle>
-          <v-col cols="12"> <v-divider /> </v-col>
+        <v-card class="pb-5" outlined>
+          <div class="primary white--text mb-5 py-2">
+            <div class="title text-center">{{ team_name }}</div>
+            <div class="subtitle-2 text-center">Members</div>
+          </div>
           <v-card
             class="mx-5 mb-5"
             outlined
-            tile
             hover
             v-for="person in team"
             :key="person.id"
           >
-            <v-card-title>{{
-              person.first_name + " " + person.last_name
-            }}</v-card-title>
-            <v-card-subtitle>
-              {{ "Phone: " + person.phone }}
+            <div class="title secondary white--text text-center py-2">
+              {{ person.first_name + " " + person.last_name }}
+            </div>
+            <div class="subtitle-2 mx-5 mt-2 pb-5">
+              <b>Phone: </b>
+              {{ person.phone }}
               <br />
-              {{ "Email: " + person.email }}
-            </v-card-subtitle>
-            <v-card-actions class="justify-end"> </v-card-actions>
+              <b>Email: </b>
+
+              {{ person.email }}
+            </div>
           </v-card>
         </v-card>
       </v-col>
-
       <v-col cols="12" md="4">
-        <v-card height="100vh">
-          <v-card-title class="justify-center">Discussions</v-card-title>
-          <v-card-subtitle class="text-center"
-            >Not implemented yet.</v-card-subtitle
-          >
-          <v-col cols="12"> <v-divider /> </v-col>
-          <v-card
-            class="mx-5"
-            outlined
-            tile
-            hover
-            v-for="item in discussions"
-            :key="item.id"
-          >
-            <v-card-title>{{ item.title }}</v-card-title>
-            <v-card-subtitle> {{ item.body }} </v-card-subtitle>
-            <v-card-actions class="justify-end">
-              <!-- Actions go here, if any -->
-            </v-card-actions>
-          </v-card>
+        <v-card class="pb-5" outlined>
+          <div class="primary white--text mb-5 py-2">
+            <div class="title text-center">Discussions</div>
+            <div class="subtitle-2 text-center">Not implemented yet.</div>
+          </div>
         </v-card>
       </v-col>
     </v-row>
@@ -159,7 +143,6 @@ export default {
           params: { team_id: team_id },
         })
         .then((res) => {
-          console.log(res.data.team);
           this.team = res.data.team;
         });
     },

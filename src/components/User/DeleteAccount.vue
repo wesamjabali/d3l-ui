@@ -1,15 +1,18 @@
 <template>
   <v-dialog width="500px" v-model="dialog">
-    <v-card class="px-2 py-2">
-      <v-card-title class="d-flex justify-center">
-        Are you sure you want to delete your account?
-      </v-card-title>
-
-
-      <v-card-actions>
+    <v-card>
+      <div class="pa-4 secondary white--text">
+        <div class="title">
+          Are you sure you want to delete your account?
+        </div>
+        <div class="caption">
+          This action cannot be undone!
+        </div>
+      </div>
+      <v-card-actions class="py-4">
         <v-spacer />
-        <v-btn color="red" outlined v-on:click="submit"> Delete Account </v-btn>
-        <v-btn color="info" v-on:click="$emit('done')"> Cancel </v-btn>
+        <v-btn color="error" outlined v-on:click="submit"> Delete Account </v-btn>
+        <v-btn color="success" v-on:click="$emit('done')"> Cancel </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

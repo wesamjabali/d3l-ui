@@ -31,7 +31,6 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
-    console.log("error", error.response.status);
     // failed response interceptor (status codes 300+)
     if (error.response.status == 401) {
       store.dispatch("logout");

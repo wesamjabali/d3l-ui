@@ -152,7 +152,6 @@ export default {
     async get_profile() {
       await this.$axios.get("/user/profile").then((res) => {
         const profile = res.data;
-        console.log(profile);
         const address_split = profile.address.split(",");
 
         this.first_name = profile.first_name;

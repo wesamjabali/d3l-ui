@@ -3,13 +3,13 @@
     :class="['mx-auto', $vuetify.breakpoint.smAndUp ? 'px-8' : 'px-0']"
     :width="this.$vuetify.breakpoint.mobile ? '100vw' : '70vw'"
     min-height="90vh"
+    elevation="0"
   >
     <v-card-title class="justify-center">
       <div :class="$vuetify.breakpoint.smAndUp ? 'text-h4' : 'text-h5'">
         Your Courses
       </div>
     </v-card-title>
-    <v-divider />
     <v-row>
       <v-col v-for="c in all_courses" :key="c.id" cols="12" sm="6">
         <v-fade-transition mode="out-in">
