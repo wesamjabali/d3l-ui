@@ -1,12 +1,12 @@
 <template>
-  <div>Course id = {{ this.$route.query.course_id }}!</div>
+  <div>Course id = {{ course_id }}!</div>
 </template>
 
 <script>
 export default {
   name: "Course",
   props: {
-    id: String,
+    course_id: String,
   },
 };
 </script>
