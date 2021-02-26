@@ -52,38 +52,31 @@ export default {
     },
     async getFile() {
       await this.$axios
-        .get("/user/content/getFileName", {
-          params: { content_id: this.content_id },
-        })
-        .then((res) => {
-          this.file_name = res.data.name;
-          this.downloadFile();
-        });
-    },
-    async downloadFile() {
-      await this.$axios
         .get("/user/content/getFile", {
           params: { content_id: this.content_id },
           responseType: "blob",
         })
         .then((res) => {
-          this.$snack.success("File got!");
-          console.log(res);
-          var fileURL = window.URL.createObjectURL(
+          const fileName = res.headers["content-disposition"].split('"')[1];
+          const fileURL = window.URL.createObjectURL(
             new Blob([res.data], { type: res.headers["content-type"] })
           );
-          var fileLink = document.createElement("a");
-
+          const fileLink = document.createElement("a");
           fileLink.href = fileURL;
-          fileLink.setAttribute("download", this.file_name);
-
+          fileLink.setAttribute("download", fileName);
           document.body.appendChild(fileLink);
-
           fileLink.click();
+          this.$snack.success("Downloading file!");
         })
         .catch((err) => {
-          this.$snack.error("An error occurred");
-          console.log(err);
+          if (err.response.status == 404) {
+            this.$snack.error(
+              `That file doesn't exist.<br />
+              Heroku may have deleted it!`
+            );
+          } else {
+            this.$snack.error("An error occurred");
+          }
         });
     },
   },

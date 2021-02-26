@@ -14,7 +14,7 @@
     v-on:click.native="show = false"
     v-model="show"
   >
-    <div class="d-flex justify-center">{{ message }}</div>
+    <div class="text-center" v-html="message" />
   </v-snackbar>
 </template>
 
