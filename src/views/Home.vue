@@ -14,6 +14,7 @@
       <v-col v-for="c in all_courses" :key="c.id" cols="12" sm="6">
         <v-fade-transition mode="out-in">
           <v-card
+            hover
             class="mx-auto"
             outlined
             :to="{ path: '/course/', query: { course_id: c.id } }"

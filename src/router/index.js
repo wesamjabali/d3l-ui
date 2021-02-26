@@ -52,6 +52,10 @@ const routes = [
     name: "Course",
     component: Course,
     beforeEnter: (to, from, next) => {
+      if (!to.query.course_id) {
+        snack.error("No course selected.");
+        next({ name: "Home" });
+      }
       axios
         .get("/user/course/belongs", {
           params: { course_id: to.query.course_id },

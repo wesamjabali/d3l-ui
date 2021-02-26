@@ -1,6 +1,6 @@
 <template>
   <v-dialog persistent width="500px" v-model="dialog">
-    <v-card class="px-2 py-2">
+    <v-card class="px-2">
       <v-card-title class="d-flex justify-center">
         Add New Content
       </v-card-title>
@@ -13,60 +13,39 @@
         ref="form"
       >
         <v-autocomplete
-          label="User"
-          :rules="required"
-          outlined
-          v-model="user_id"
-          :items="all_users"
-          :item-text="(user) => user.first_name + ' ' + user.last_name"
-          item-value="id"
-        >
-        </v-autocomplete>
-
-        <v-text-field
-        label="Subject"
-        single-line
-        full-width
-        hide-details
-        ></v-text-field>
-        <v-divider></v-divider>
-        <v-textarea
-        v-model="title"
-        label="Message"
-        counter
-        maxlength="120"
-        full-width
-        single-line
-        ></v-textarea>
-
-
-        <v-autocomplete
-          label="Team"
-          :rules="required"
-          outlined
-          v-model="team"
-          :items="all_courses"
-          item-text="title"
-          item-value="id"
-          multiple
-          small-chips
-          deletable-chips
-        >
-        </v-autocomplete>
-
-        <v-autocomplete
           label="Course"
           :rules="required"
           outlined
-          v-model="courses"
+          v-model="course_id"
           :items="all_courses"
           item-text="title"
           item-value="id"
-          multiple
           small-chips
-          deletable-chips
         >
         </v-autocomplete>
+        <v-text-field
+          label="Title"
+          v-model="title"
+          :rules="required"
+          outlined
+        ></v-text-field>
+        <v-textarea
+          v-model="body"
+          label="Body"
+          :rules="required"
+          outlined
+        ></v-textarea>
+        <v-row>
+          <v-file-input
+            v-model="file"
+            label="Attachment"
+            outlined
+            :rules="required"
+            >File</v-file-input
+          >
+          <v-spacer />
+          <v-switch v-model="is_graded" label="Graded"> </v-switch>
+        </v-row>
       </v-form>
       <v-card-actions>
         <v-spacer />
@@ -83,15 +62,17 @@ export default {
   data() {
     return {
       dialog: true,
-      all_users: [],
       all_courses: [],
-      courses: "",
-      user_id: "",
+      file: undefined,
+      course_id: undefined,
+      content_id: undefined, // For getting file
+      title: "",
+      body: "",
+      is_graded: false,
       required: [(v) => !!v || "This field is required"],
     };
   },
   mounted() {
-    this.get_all_users();
     this.get_all_courses();
   },
   methods: {
@@ -99,56 +80,30 @@ export default {
       if (!this.$refs.form.validate()) {
         return;
       }
-      if (this.courses.length == 0) {
-        this.$snack.error("Select a course");
-        return;
-      }
-      
-      const courses = this.courses;
-      const user_id = this.user_id;
 
+      let formData = new FormData();
+      formData.append("content_file", this.file);
+      formData.append("course_id", this.course_id);
+      formData.append("title", this.title);
+      formData.append("body", this.body);
+      formData.append("is_graded", this.is_graded);
       await this.$axios
-        .post("/admin/user/addCourse", {
-          courses,
-          user_id,
-        })
+        .post("/faculty/content/new", formData)
         .then(() => {
-          this.$snack.success("Course added!");
+          this.$snack.success("File added!");
           this.$emit("done");
         })
         .catch((err) => {
-          if (err.response.status) {
-            this.$snack.error("Course already exists");
+          if (err.response.status == 409) {
+            this.$snack.error("That file already exists for that course.");
           } else {
             this.$snack.error("An error occurred");
           }
         });
     },
-    async get_all_users() {
-      await this.$axios
-        .get("/admin/user/getAllUsers")
-        .then((res) => {
-          this.all_users = res.data.users;
-        })
-        .catch(() => {
-          this.$snack.error("An error occurred");
-        });
-    },
-
-    async get_all_team() {
-      await this.$axios
-        .get("/admin/user/getAllTeam")
-        .then((res) => {
-          this.all_team = res.data.team;
-        })
-        .catch(() => {
-          this.$snack.error("An error occurred");
-        });
-    },
-
     async get_all_courses() {
       await this.$axios
-        .get("/admin/course/getAllCourses")
+        .get("/user/course/getAllCourses")
         .then((res) => {
           this.all_courses = res.data.courses;
         })
