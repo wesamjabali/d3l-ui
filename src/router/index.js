@@ -42,7 +42,7 @@ const routes = [
     path: "*",
     name: "Else",
     beforeEnter: (to, from, next) => {
-      next({ name: "Student_Page" });
+      next({ name: "Home" });
     }
   }
 ];
