@@ -13,21 +13,6 @@
         ref="form"
       >
         <v-autocomplete
-          label="Course"
-          :rules="required"
-          outlined
-          v-model="course_id"
-          :items="all_courses"
-          item-text="title"
-          item-value="id"
-          small-chips
-          @change="
-            get_all_users();
-            get_all_teams();
-          "
-        >
-        </v-autocomplete>
-        <v-autocomplete
           label="User"
           :rules="required"
           outlined
@@ -35,7 +20,6 @@
           :items="all_users"
           :item-text="(user) => user.first_name + ' ' + user.last_name"
           item-value="id"
-          :disabled="!course_id"
         >
         </v-autocomplete>
         <v-select
@@ -47,8 +31,6 @@
           item-text="team_name"
           item-value="id"
           small-chips
-          deletable-chips
-          :disabled="!course_id"
         >
         </v-select>
       </v-form>
@@ -69,15 +51,17 @@ export default {
       dialog: true,
       all_teams: [],
       all_users: [],
-      all_courses: [],
       user_id: "",
-      course_id: "",
       team_id: "",
       required: [(v) => !!v || "This field is required"],
     };
   },
+  props: {
+    course_id: String,
+  },
   mounted() {
-    this.get_all_courses();
+    this.get_all_users();
+    this.get_all_teams();
   },
   methods: {
     async submit() {
@@ -98,16 +82,6 @@ export default {
         })
         .catch(() => {
           this.$snack.error("User already belongs to that team.");
-        });
-    },
-    async get_all_courses() {
-      await this.$axios
-        .get("/user/course/getAllCourses")
-        .then((res) => {
-          this.all_courses = res.data.courses;
-        })
-        .catch(() => {
-          this.$snack.error("An error occurred");
         });
     },
     async get_all_users() {

@@ -12,17 +12,6 @@
         @keyup.enter.native="submit"
         ref="form"
       >
-        <v-autocomplete
-          label="Course"
-          :rules="required"
-          outlined
-          v-model="course_id"
-          :items="all_courses"
-          item-text="title"
-          item-value="id"
-          small-chips
-        >
-        </v-autocomplete>
         <v-text-field
           label="Title"
           v-model="title"
@@ -62,18 +51,15 @@ export default {
   data() {
     return {
       dialog: true,
-      all_courses: [],
       file: undefined,
-      course_id: undefined,
-      content_id: undefined, // For getting file
       title: "",
       body: "",
       is_graded: false,
       required: [(v) => !!v || "This field is required"],
     };
   },
-  mounted() {
-    this.get_all_courses();
+  props: {
+    course_id: String,
   },
   methods: {
     async submit() {
@@ -99,16 +85,6 @@ export default {
           } else {
             this.$snack.error("An error occurred");
           }
-        });
-    },
-    async get_all_courses() {
-      await this.$axios
-        .get("/user/course/getAllCourses")
-        .then((res) => {
-          this.all_courses = res.data.courses;
-        })
-        .catch(() => {
-          this.$snack.error("An error occurred");
         });
     },
   },
