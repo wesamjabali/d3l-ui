@@ -29,6 +29,7 @@
             v-model="file"
             label="Attachment"
             outlined
+            :rules="required"
             >File</v-file-input
           >
           <v-spacer />
@@ -59,6 +60,13 @@ export default {
   },
   props: {
     course_id: String,
+  },
+  mounted() {
+    // Fix v-file-input for iPhone/Safari
+    let inputs = document.querySelectorAll(".v-file-input input");
+    [...inputs].forEach((input) => {
+      input.remove();
+    });
   },
   methods: {
     async submit() {
