@@ -1,5 +1,8 @@
 <template>
-  <v-card class="mx-auto" width="70vw">
+  <v-card
+    class="mx-auto"
+    :width="this.$vuetify.breakpoint.mobile ? '100vw' : '70vw'"
+  >
     <v-img
       src="https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ"
       height="15vh"
