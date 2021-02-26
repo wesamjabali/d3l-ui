@@ -62,6 +62,11 @@ export default {
   mounted() {
     this.get_all_users();
     this.get_all_teams();
+    // fix for v-file-input not triggering properly
+    let inputs = document.querySelectorAll(".v-file-input input");
+    [...inputs].forEach((input) => {
+      input.remove();
+    });
   },
   methods: {
     async submit() {
