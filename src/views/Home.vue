@@ -1,44 +1,36 @@
 <template>
   <v-card
-    class="mx-auto"
+    :class="['mx-auto', $vuetify.breakpoint.smAndUp ? 'px-8' : 'px-0']"
     :width="this.$vuetify.breakpoint.mobile ? '100vw' : '70vw'"
+    min-height="90vh"
   >
-    <v-img
-      src="https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ"
-      height="15vh"
-    ></v-img>
-
     <v-card-title class="justify-center">
-      Your Courses
+      <div :class="$vuetify.breakpoint.smAndUp ? 'text-h4' : 'text-h5'">
+        Your Courses
+      </div>
     </v-card-title>
+    <v-divider />
+    <v-row>
+      <v-col v-for="c in all_courses" :key="c.id" cols="12" sm="6">
+        <v-fade-transition mode="out-in">
+          <v-card
+            class="mx-auto"
+            outlined
+            :to="{ path: '/course/', query: { course_id: c.id } }"
+          >
+            <v-img
+              :src="'https://picsum.photos/350/165?random=' + c.id"
+              :height="$vuetify.breakpoint.smAndUp ? '15vw' : '15vh'"
+            ></v-img>
 
-    <v-container class="fill-height" fluid style="min-height: 434px">
-      <v-fade-transition mode="out-in">
-        <v-row>
-          <v-col v-for="c in all_courses" :key="c.id" cols="12" sm="6">
-            <v-card
-              class="mx-auto"
-              :to="{ path: '/course/', query: { course_id: c.id } }"
-            >
-              <v-img
-                :src="'https://picsum.photos/350/165?random=' + c.id"
-                height="125"
-                class="grey darken-4"
-              ></v-img>
-
-              <v-card-title> {{ c.title }} </v-card-title>
-              <v-card-subtitle>
-                {{ c.course_prefix }}-{{ c.course_number }}-{{
-                  c.section_number
-                }}
-              </v-card-subtitle>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-fade-transition>
-    </v-container>
-
-    <v-spacer></v-spacer>
+            <v-card-title> {{ c.title }} </v-card-title>
+            <v-card-subtitle>
+              {{ c.course_prefix }}-{{ c.course_number }}-{{ c.section_number }}
+            </v-card-subtitle>
+          </v-card>
+        </v-fade-transition>
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 

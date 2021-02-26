@@ -57,34 +57,17 @@ const routes = [
           params: { course_id: to.query.course_id },
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data.value) {
+            // If user belongs to this course
             next();
           } else {
-            snack.error("You don't have access to that course!");
+            snack.error("You don't belong in that course!");
             next({ name: "Home" });
           }
         });
     },
-    props: {
-      course_id: (route) => route.query.course_id,
-    },
-    // beforeEnter: (to, from, next) => {
-    //   axios
-    //     .get("/user/course/belongs", {
-    //       course_id: to.query.course_id,
-    //     })
-    //     .then((res) => {
-    //       if (res.data.value) {
-    //         // next();
-    //         console.log(res.data);
-    //       } else {
-    //         // next({ name: "Home" });
-    //       }
-    //     });
-    //   if (store.getters.isLoggedIn) next({ name: "Home" });
-    //   else next();
-    // },
+    // Send query as prop
+    props: (route) => ({ course_id: route.query.course_id }),
   },
   {
     path: "/playground",
