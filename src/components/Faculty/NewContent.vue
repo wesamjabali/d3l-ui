@@ -29,7 +29,6 @@
             v-model="file"
             label="Attachment"
             outlined
-            :rules="required"
             >File</v-file-input
           >
           <v-spacer />
