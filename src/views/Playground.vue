@@ -5,7 +5,7 @@
     <AddCourse v-if="add_course" @done="add_course = false" />
     <NewTeam v-if="new_team" @done="new_team = false" />
     <AddTeam v-if="add_team" @done="add_team = false" />
-    <FileTest v-if="file_test" @done="file_test = false" />
+    <NewContent v-if="new_content" @done="new_content = false" />
 
     <v-row class="justify-center">
       <v-col cols="12">
@@ -14,7 +14,7 @@
           <v-btn v-on:click="new_course = true">New Course</v-btn>
           <v-btn v-on:click="add_role = true">Add Role</v-btn>
           <v-btn v-on:click="add_course = true">Add Course</v-btn>
-          <v-btn v-on:click="file_test = true">File Test</v-btn>
+          <v-btn v-on:click="new_content = true">File Test</v-btn>
 
           <v-menu>
             <template v-slot:activator="{ on, attrs }">
@@ -68,7 +68,7 @@ import AddRole from "@/components/Admin/AddRole";
 import AddCourse from "@/components/Admin/AddCourse";
 import NewTeam from "@/components/Faculty/NewTeam";
 import AddTeam from "@/components/Faculty/AddTeam";
-import FileTest from "@/components/Faculty/FileTest";
+import NewContent from "@/components/Faculty/NewContent";
 
 export default {
   name: "Home",
@@ -78,7 +78,7 @@ export default {
     AddCourse,
     NewTeam,
     AddTeam,
-    FileTest,
+    NewContent,
   },
   computed: {
     isLoggedIn() {
@@ -106,7 +106,7 @@ export default {
       add_course: false,
       new_team: false,
       add_team: false,
-      file_test: false,
+      new_content: false,
     };
   },
   methods: {

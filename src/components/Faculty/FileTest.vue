@@ -25,8 +25,8 @@ export default {
     return {
       dialog: true,
       file: undefined,
-      file_name: "",
-      content_id: 1,
+      content_id: undefined,
+      
     };
   },
   methods: {
