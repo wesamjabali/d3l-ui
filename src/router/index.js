@@ -6,6 +6,7 @@ import Register from "@/views/Register.vue";
 import Profile from "@/views/Profile.vue";
 import store from "../store";
 
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -28,7 +29,7 @@ const routes = [
     }
   },
   {
-    path: "/home",
+    path: "/Home",
     name: "Home",
     component: Home
   },
