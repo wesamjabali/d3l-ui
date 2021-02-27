@@ -15,6 +15,12 @@
       v-if="add_team_member_dialog"
       @done="add_team_member_dialog = false"
     />
+
+    <ViewContent 
+     v-if="view_content"
+      @done="view_content = false"
+    />
+
     <v-card
       :class="['mx-auto', 'pb-5']"
       :width="mobile_user ? '100vw' : '90vw'"
@@ -57,7 +63,7 @@
           <v-card class="pb-5" outlined>
             <div class="primary white--text mb-5 py-2">
               <div class="title text-center">Content</div>
-              <div class="subtitle-2 text-center">Click to Download</div>
+              <div class="subtitle-2 text-center">Click to view Content</div>
             </div>
 
             <v-card
@@ -66,7 +72,7 @@
               hover
               v-for="item in content"
               :key="item.id"
-              @click="getFile(item.id)"
+              @click="view_content = true"
             >
               <div class="title secondary white--text text-center py-2">
                 {{ item.title }}
@@ -125,12 +131,14 @@
 import NewContent from "@/components/Faculty/NewContent";
 import NewTeam from "@/components/Faculty/NewTeam";
 import AddTeam from "@/components/Faculty/AddTeam";
+import ViewContent from "@/components/User/ViewContent";
 export default {
   name: "Course",
   components: {
     NewContent,
     NewTeam,
     AddTeam,
+    ViewContent,
   },
   props: {
     course_id: String,
@@ -159,7 +167,10 @@ export default {
       ],
       new_content_dialog: false,
       course: [],
-      content: [],
+      content: [
+
+      ],
+      view_content: false,
       team: [],
       discussions: [],
       team_name: "",
@@ -212,6 +223,8 @@ export default {
           this.team = res.data.team;
         });
     },
+
+
     async getFile(content_id) {
       await this.$axios
         .get("/user/content/getFile", {
