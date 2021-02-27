@@ -44,7 +44,7 @@
               label="Points"
               type="number"
               hint="Leave empty if you don't want this assignment graded."
-              v-model="points_total"
+              v-model="temp_points_total"
               :rules="points"
               outlined
             ></v-text-field>
@@ -69,7 +69,8 @@ export default {
       file: undefined,
       title: "",
       body: "",
-      points_total: "",
+      temp_points_total: "",
+      content: [],
       required: [(v) => !!v || "This field is required"],
       points: [
         (v) => v <= 100 || "Must be 0-100 points!",
@@ -78,8 +79,15 @@ export default {
     };
   },
   computed: {
+    points_total() {
+      if (this.temp_points_total) {
+        return this.temp_points_total;
+      } else {
+        return -1;
+      }
+    },
     is_graded() {
-      if (this.points_total) {
+      if (this.points_total >= 0) {
         return true;
       } else {
         return false;
@@ -95,6 +103,7 @@ export default {
     [...inputs].forEach((input) => {
       input.remove();
     });
+    this.getOwnContent();
   },
   methods: {
     async submit() {
