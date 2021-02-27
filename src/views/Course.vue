@@ -18,6 +18,7 @@
 
     <ViewContent 
      v-if="view_content"
+     :content_id="content_id"
       @done="view_content = false"
     />
 
@@ -72,7 +73,7 @@
               hover
               v-for="item in content"
               :key="item.id"
-              @click="view_content = true"
+              @click="view_content = true; content_id=item.id"
             >
               <div class="title secondary white--text text-center py-2">
                 {{ item.title }}
@@ -170,6 +171,7 @@ export default {
       content: [
 
       ],
+      content_id: -1,
       view_content: false,
       team: [],
       discussions: [],

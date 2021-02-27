@@ -41,6 +41,7 @@
 <script>
 export default {
   name: "NewContent",
+ 
   data() {
     return {
 
@@ -59,16 +60,31 @@ export default {
     };
   },
   props: {
-    course_id: String,
+    content_id: String,
   },
   mounted() {
-    // Fix v-file-input for iPhone/Safari
-    let inputs = document.querySelectorAll(".v-file-input input");
-    [...inputs].forEach((input) => {
-      input.remove();
-    });
+    console.log(this.content_id)
+  this.getOwnContent(this.content_id); 
+      this.$axios.post("/faculty/content/grade", {
+        content_id: this.content_id,
+        user_id: "1",
+        points_earned: "37",
+      });
   },
   methods: {
+     async getOwnContent() {
+        await this.$axios
+          .get("/user/content/getOwn", {
+            params: { content_id: this.content_id },
+          })
+          .then((res) => {
+            let { content } = res.data;
+            this.content = content;
+          })
+          .catch(() => {
+            this.$snack.error("Error getting content data");
+          });
+    },
     async getFile(content_id) {
       await this.$axios
         .get("/user/content/getFile", {
