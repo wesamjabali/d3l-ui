@@ -2,7 +2,7 @@
   <v-dialog persistent width="500px" v-model="dialog">
     <v-card class="px-2">
       <v-card color="#1976d2" padding-top="10px">
-      <v-card-title class="d-flex justify-center">
+      <v-card-title class="d-flex justify-center white--text" >
         Content Details
       </v-card-title>
       </v-card>
@@ -12,20 +12,22 @@
         @keyup.esc.native="$emit('done')"
         ref="form"
       >
-       <div class="title">
+      <v-card class="pa-6">
+       <div class="title d-flex justify-center">
           {{ content.title }}
           
         </div>
-        <div>
-          {{content.body}}
+        <div class="pt-6">
+          <h4>Grade Breakdown </h4>
+          <span class="justify-center" v-html="content.body"></span>
         </div>
-        <div v-if="content.is_graded">
-          {{ content.points_earned }}<b> / </b>{{ content.points_total }} total points earned <br>Percentage: {{ content.points_earned/content.points_total * 100 + '%' }}
+        <div class="pt-6">
+          <b>Total points earned: </b>{{ content.points_earned }}<b> / </b>{{ content.points_total }}
+          </div>
+          <div class="pt-6">
+          <b>Percentage: </b>{{ content.points_earned/content.points_total * 100 + '%' }}
         </div>
-
-        
-        
-        
+        </v-card>
           
       
       </v-form>
@@ -46,8 +48,8 @@ export default {
     return {
 
       content: { 
-        title: "This is the title",
-        body: "This is the <br/> body",
+        title: "Assignment Title",
+        body: "You suck, <br> this assignment was trash",
         file_name: "myFile.pdf",
         is_graded: false,
         points_total: 100,
@@ -63,13 +65,13 @@ export default {
     content_id: String,
   },
   mounted() {
-    console.log(this.content_id)
-  this.getOwnContent(this.content_id); 
-      this.$axios.post("/faculty/content/grade", {
-        content_id: this.content_id,
-        user_id: "1",
-        points_earned: "37",
-      });
+  //   console.log(this.content_id)
+  // this.getOwnContent(this.content_id); 
+  //     this.$axios.post("/faculty/content/grade", {
+  //       content_id: this.content_id,
+  //       user_id: "1",
+  //       points_earned: "37",
+  //     });
   },
   methods: {
      async getOwnContent() {
