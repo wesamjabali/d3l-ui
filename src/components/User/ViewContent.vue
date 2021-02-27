@@ -18,7 +18,7 @@
           
         </div>
         <div class="pt-6">
-          <h4>Grade Breakdown </h4>
+          <h4>Grade Breakdown: </h4>
           <span class="justify-center" v-html="content.body"></span>
         </div>
         <div class="pt-6">
