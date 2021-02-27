@@ -1,10 +1,12 @@
 <template>
+  
   <v-card
     :class="['mx-auto', $vuetify.breakpoint.smAndUp ? 'px-8' : 'px-0']"
     :width="this.$vuetify.breakpoint.mobile ? '100vw' : '70vw'"
     min-height="90vh"
     elevation="0"
   >
+    <AdminBar v-if="isAdmin" />
     <v-card-title class="justify-center">
       <div :class="$vuetify.breakpoint.smAndUp ? 'text-h4' : 'text-h5'">
         Your Courses
@@ -36,6 +38,7 @@
 </template>
 
 <script>
+import AdminBar from "@/components/Admin/AdminBar";
 export default {
   name: "Home",
 
@@ -44,10 +47,18 @@ export default {
       all_courses: [],
     };
   },
+  components: {
+    AdminBar,
+  },
   mounted() {
     this.get_all_courses();
   },
-
+  computed:{
+    
+    isAdmin() {
+      return this.$store.getters.roles.includes("admin");
+    }
+  },
   methods: {
     async get_all_courses() {
       await this.$axios
