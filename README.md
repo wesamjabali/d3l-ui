@@ -1,4 +1,4 @@
-# D3L-UIx
+# D3L-UI
 
 ## Project setup
 ```
