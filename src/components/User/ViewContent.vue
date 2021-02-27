@@ -49,7 +49,7 @@ export default {
 
       content: { 
         title: "Assignment Title",
-        body: "You suck, <br> this assignment was trash",
+        body: "Nice try bud, <br> but it was sub par",
         file_name: "myFile.pdf",
         is_graded: false,
         points_total: 100,
