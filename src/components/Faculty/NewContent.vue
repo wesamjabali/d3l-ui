@@ -12,28 +12,43 @@
         @keyup.enter.native="submit"
         ref="form"
       >
-        <v-text-field
-          label="Title"
-          v-model="title"
-          :rules="required"
-          outlined
-        ></v-text-field>
-        <v-textarea
-          v-model="body"
-          label="Body"
-          :rules="required"
-          outlined
-        ></v-textarea>
-        <v-row>
-          <v-file-input
-            v-model="file"
-            label="Attachment"
-            outlined
-            :rules="required"
-            >File</v-file-input
-          >
-          <v-spacer />
-          <v-switch v-model="is_graded" label="Graded"> </v-switch>
+        <v-row no-gutters>
+          <v-col cols="12">
+            <v-text-field
+              label="Title"
+              v-model="title"
+              :rules="required"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <v-textarea
+              v-model="body"
+              label="Body"
+              :rules="required"
+              outlined
+            ></v-textarea>
+          </v-col>
+          <v-col cols="6">
+            <v-file-input
+              v-model="file"
+              class="mr-4"
+              label="Attachment"
+              outlined
+              :rules="required"
+              >File</v-file-input
+            >
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              label="Points"
+              type="number"
+              hint="Leave empty if you don't want this assignment graded."
+              v-model="points_total"
+              :rules="points"
+              outlined
+            ></v-text-field>
+          </v-col>
         </v-row>
       </v-form>
       <v-card-actions>
@@ -54,9 +69,22 @@ export default {
       file: undefined,
       title: "",
       body: "",
-      is_graded: false,
+      points_total: "",
       required: [(v) => !!v || "This field is required"],
+      points: [
+        (v) => v <= 100 || "Must be 0-100 points!",
+        (v) => v >= 0 || "Must be 0-100 points!",
+      ],
     };
+  },
+  computed: {
+    is_graded() {
+      if (this.points_total) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   props: {
     course_id: String,
@@ -80,6 +108,8 @@ export default {
       formData.append("title", this.title);
       formData.append("body", this.body);
       formData.append("is_graded", this.is_graded);
+      formData.append("points_total", this.points_total);
+
       await this.$axios
         .post("/faculty/content/new", formData)
         .then(() => {
