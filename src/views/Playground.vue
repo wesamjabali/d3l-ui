@@ -6,6 +6,7 @@
     <NewTeam v-if="new_team" @done="new_team = false" />
     <AddTeam v-if="add_team" @done="add_team = false" />
     <NewContent v-if="new_content" @done="new_content = false" />
+  
 
     <v-row class="justify-center">
       <v-col cols="12">
