@@ -103,7 +103,6 @@ export default {
     [...inputs].forEach((input) => {
       input.remove();
     });
-    this.getOwnContent();
   },
   methods: {
     async submit() {
