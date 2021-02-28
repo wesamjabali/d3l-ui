@@ -5,6 +5,11 @@
       v-if="new_content_dialog"
       @done="new_content_dialog = false"
     />
+    <NewDiscussion
+      :course_id="course_id"
+      v-if="new_discussion_dialog"
+      @done="new_discussion_dialog = false"
+    />
     <NewTeam
       :course_id="course_id"
       v-if="new_team_dialog"
@@ -58,6 +63,9 @@
           </v-list-item>
         </v-list>
       </v-menu>
+      <v-btn v-if="authorized_user" @click="new_discussion_dialog = true"
+        >New Discussion</v-btn
+      >
 
       <v-row>
         <v-col cols="12" md="4">
@@ -130,6 +138,7 @@
 
 <script>
 import NewContent from "@/components/Faculty/NewContent";
+import NewDiscussion from "@/components/User/NewDiscussion";
 import NewTeam from "@/components/Faculty/NewTeam";
 import AddTeam from "@/components/Faculty/AddTeam";
 import ViewContent from "@/components/User/ViewContent";
@@ -137,6 +146,7 @@ export default {
   name: "Course",
   components: {
     NewContent,
+    NewDiscussion,
     NewTeam,
     AddTeam,
     ViewContent,
@@ -148,6 +158,7 @@ export default {
     return {
       mobile_user: !this.$vuetify.smAndUp,
       new_team_dialog: false,
+      new_discussion_dialog: false,
       add_team_member_dialog: false,
       authorized_user:
         this.$store.getters.roles.includes("faculty") ||
