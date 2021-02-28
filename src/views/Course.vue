@@ -21,9 +21,9 @@
       @done="add_team_member_dialog = false"
     />
 
-    <ViewContent 
-     v-if="view_content"
-     :content_id="content_id"
+    <ViewContent
+      v-if="view_content"
+      :content_id="content_id"
       @done="view_content = false"
     />
 
@@ -66,6 +66,7 @@
       <v-btn v-if="authorized_user" @click="new_discussion_dialog = true"
         >New Discussion</v-btn
       >
+      <!-- END TM FACULTY -->
 
       <v-row>
         <v-col cols="12" md="4">
@@ -81,7 +82,10 @@
               hover
               v-for="item in content"
               :key="item.id"
-              @click="view_content = true; content_id=item.id"
+              @click="
+                view_content = true;
+                content_id = item.id;
+              "
             >
               <div class="title secondary white--text text-center py-2">
                 {{ item.title }}
@@ -89,8 +93,23 @@
 
               <div class="subtitle-2 mx-5 mt-2">{{ item.body }}</div>
               <v-card-actions class="justify-end mb-n2">
-                <v-switch disabled v-model="item.is_graded" label="Graded">
-                </v-switch>
+                <div v-if="item.points_earned > -1">
+                  {{
+                    Number(
+                      (item.points_earned / item.points_total) * 100
+                    ).toFixed(2)
+                  }}
+                  %
+                </div>
+                <div
+                  class="text--disabled"
+                  v-if="item.points_earned <= -1 && item.points_total > -1"
+                >
+                  Not yet graded
+                </div>
+                <div class="text--disabled" v-if="item.points_total <= -1">
+                  Not graded
+                </div>
               </v-card-actions>
             </v-card>
           </v-card>
@@ -154,12 +173,29 @@ export default {
   props: {
     course_id: String,
   },
+  computed: {
+    total_earned() {
+      var total = 0;
+      this.content.forEach((c) => {
+        total += c.points_earned;
+      });
+      return total;
+    },
+    total_possible() {
+      var total = 0;
+      this.content.forEach((c) => {
+        total += c.points_possible;
+      });
+      return total;
+    },
+  },
   data() {
     return {
       mobile_user: !this.$vuetify.smAndUp,
       new_team_dialog: false,
       new_discussion_dialog: false,
       add_team_member_dialog: false,
+      grades: [],
       authorized_user:
         this.$store.getters.roles.includes("faculty") ||
         this.$store.getters.roles.includes("admin"),
@@ -179,9 +215,7 @@ export default {
       ],
       new_content_dialog: false,
       course: [],
-      content: [
-
-      ],
+      content: [],
       content_id: -1,
       view_content: false,
       team: [],
@@ -190,11 +224,31 @@ export default {
     };
   },
   mounted() {
+    // this.grade();
     this.get_course_info();
     this.get_content_info();
+    this.get_grades();
     this.get_team();
   },
   methods: {
+    async grade() {
+      this.$axios.post("/faculty/content/grade", {
+        content_id: "2",
+        user_id: "1",
+        points_earned: 25,
+        course_id: "1",
+      });
+    },
+    async get_grades() {
+      await this.$axios
+        .get("/user/content/getAllGradesForCourse", {
+          params: { course_id: this.course_id },
+        })
+        .then((res) => {
+          let { grades } = res.data;
+          this.grades = grades;
+        });
+    },
     async get_course_info() {
       await this.$axios
         .get("/user/course/get", {
@@ -210,7 +264,9 @@ export default {
           params: { course_id: this.course_id },
         })
         .then((res) => {
-          this.content = res.data.content;
+          let { content } = res.data;
+          console.log(res.data);
+          this.content = content;
         });
     },
     async get_team() {
@@ -236,7 +292,6 @@ export default {
           this.team = res.data.team;
         });
     },
-
 
     async getFile(content_id) {
       await this.$axios

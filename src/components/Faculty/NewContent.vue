@@ -86,13 +86,6 @@ export default {
         return -1;
       }
     },
-    is_graded() {
-      if (this.points_total >= 0) {
-        return true;
-      } else {
-        return false;
-      }
-    },
   },
   props: {
     course_id: String,
@@ -115,7 +108,6 @@ export default {
       formData.append("course_id", this.course_id);
       formData.append("title", this.title);
       formData.append("body", this.body);
-      formData.append("is_graded", this.is_graded);
       formData.append("points_total", this.points_total);
 
       await this.$axios

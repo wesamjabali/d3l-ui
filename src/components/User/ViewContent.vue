@@ -1,40 +1,56 @@
 <template>
   <v-dialog persistent width="500px" v-model="dialog">
-    <v-card class="px-2">
-      <v-card color="#1976d2" padding-top="10px">
-      <v-card-title class="d-flex justify-center white--text" >
-        Content Details
-      </v-card-title>
-      </v-card>
-      <v-divider class="mb-3" />
-      <v-form
-        class="px-8"
-        @keyup.esc.native="$emit('done')"
-        ref="form"
+    <v-card class="px-10">
+      <div class="title text-center secondary white--text py-5 mx-n10">
+        {{ content.title }}
+      </div>
+      <v-card
+        class="mt-5"
+        color="grey lighten-4"
+        flat
+        v-if="content.points_total > -1"
       >
-      <v-card class="pa-6">
-       <div class="title d-flex justify-center">
-          {{ content.title }}
-          
+        <div class="text-center mt-2" v-if="content.points_earned > -1">
+          {{
+            Number(
+              (content.points_earned / content.points_total) * 100
+            ).toFixed(2) + "%"
+          }}
         </div>
-        <div class="pt-6">
-          <h4>Grade Breakdown: </h4>
-          <span class="justify-center" v-html="content.body"></span>
+      </v-card>
+      <v-card
+        class="mt-5"
+        color="grey lighten-3"
+        flat
+        v-if="content.points_earned > -1"
+      >
+        <div v-if="content.points_earned" class="mt-5 text-center">
+          {{ Number(content.points_earned).toFixed(2) }}/{{
+            Number(content.points_total).toFixed(2)
+          }}
+          Points
         </div>
-        <div class="pt-6">
-          <b>Total points earned: </b>{{ content.points_earned }}<b> / </b>{{ content.points_total }}
-          </div>
-          <div class="pt-6">
-          <b>Percentage: </b>{{ content.points_earned/content.points_total * 100 + '%' }}
+      </v-card>
+      <v-card
+        class="mt-5"
+        color="grey lighten-3"
+        flat
+        v-if="content.points_total > -1"
+      >
+        <div v-if="content.points_earned" class="mt-5 text-center">
+          {{ Number(content.points_total).toFixed(2) }}
+          Points
         </div>
-        </v-card>
-          
-      
-      </v-form>
-      <v-card-actions>
+      </v-card>
+      <v-card class="mt-5" color="grey lighten-2" flat>
+        <div v-html="content.body" class="text-center" />
+      </v-card>
+      <v-card-actions class="mx-n10 mt-5">
         <v-spacer />
-        <v-btn text v-on:click="getFile(content.file_name)"> Download attached file </v-btn>
-        <v-btn text v-on:click="$emit('done')"> Cancel </v-btn>
+        <v-btn text color="primary" v-on:click="getFile(content_id)">
+          Download
+        </v-btn>
+        <v-btn text color="" v-on:click="$emit('done')"> Cancel </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -43,21 +59,13 @@
 <script>
 export default {
   name: "NewContent",
- 
+
   data() {
     return {
-
-      content: { 
-        title: "Assignment Title",
-        body: "Nice try bud, <br> but it was sub par",
-        file_name: "myFile.pdf",
-        is_graded: false,
-        points_total: 100,
-        points_earned: 50,
-      },
+      content: [],
       dialog: true,
       file: undefined,
-      
+
       required: [(v) => !!v || "This field is required"],
     };
   },
@@ -65,27 +73,39 @@ export default {
     content_id: String,
   },
   mounted() {
-  //   console.log(this.content_id)
-  // this.getOwnContent(this.content_id); 
-  //     this.$axios.post("/faculty/content/grade", {
-  //       content_id: this.content_id,
-  //       user_id: "1",
-  //       points_earned: "37",
-  //     });
+    this.getOwnContent();
   },
   methods: {
-     async getOwnContent() {
-        await this.$axios
-          .get("/user/content/getOwn", {
-            params: { content_id: this.content_id },
-          })
-          .then((res) => {
-            let { content } = res.data;
+    async getOwnContent() {
+      await this.$axios
+        .get("/user/content/getOwn", {
+          params: { content_id: this.content_id },
+        })
+        .then((res) => {
+          let { content } = res.data;
+          if (content == undefined) {
+            this.getContent();
+          } else {
             this.content = content;
-          })
-          .catch(() => {
-            this.$snack.error("Error getting content data");
-          });
+          }
+        })
+        .catch(() => {
+          this.$snack.error("Error getting content data");
+        });
+    },
+    async getContent() {
+      await this.$axios
+        .get("/user/content/getContent", {
+          params: { content_id: this.content_id },
+        })
+        .then((res) => {
+          let { content } = res.data;
+          content.points_earned = -1;
+          this.content = content;
+        })
+        .catch(() => {
+          this.$snack.error("Error getting content data");
+        });
     },
     async getFile(content_id) {
       await this.$axios
