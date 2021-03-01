@@ -42,43 +42,37 @@
       @done="view_discussion = false"
     />
 
-      <!-- Toolbar-->
-      <v-toolbar rounded flat color="secondary" dense>
-        <v-spacer />
-        <v-btn
-          v-if="authorized_user"
-          text
-          class="white--text"
-          @click="new_content_dialog = true"
-          >New Content</v-btn
-        >
-        <v-menu v-if="authorized_user" offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" text class="ml-5 white--text" v-on="on">
-              Manage teams
-            </v-btn>
-          </template>
+    <!-- Toolbar-->
+    <v-card class="py-3 text-center" rounded flat dense color="secondary">
+      <v-btn
+        v-if="authorized_user"
+        text
+        class="white--text"
+        @click="new_content_dialog = true"
+        >New Content</v-btn
+      >
+      <v-menu v-if="authorized_user" offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-bind="attrs" text class="ml-5 white--text" v-on="on">
+            Manage teams
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="item in manage_team"
+            :key="item.name"
+            @click="item.action"
+          >
+            <v-list-item-title>{{ item.name }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+      <v-btn text class="ml-5 white--text" @click="new_discussion_dialog = true"
+        >New Discussion</v-btn
+      >
+    </v-card>
+    <!-- END toolbar -->
 
-          <v-list>
-            <v-list-item
-              v-for="item in manage_team"
-              :key="item.name"
-              @click="item.action"
-            >
-              <v-list-item-title>{{ item.name }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-        <v-btn
-          text
-          class="ml-5 white--text"
-          @click="new_discussion_dialog = true"
-          >New Discussion</v-btn
-        >
-        <v-spacer />
-      </v-toolbar>
-      <!-- END toolbar -->
-      
     <v-card
       :class="['mx-auto', 'pb-5']"
       :width="mobile_user ? '100vw' : '90vw'"

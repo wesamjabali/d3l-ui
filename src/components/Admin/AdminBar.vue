@@ -3,8 +3,7 @@
     <NewCourse v-if="new_course" @done="new_course = false" />
     <AddRole v-if="add_role" @done="add_role = false" />
     <AddCourse v-if="add_course" @done="add_course = false" />
-    <v-toolbar rounded flat color="secondary" dense>
-      <v-spacer />
+    <v-card class="py-3 text-center" rounded flat dense color="secondary">
       <v-btn
         v-for="item in admin_actions"
         text
@@ -14,8 +13,7 @@
       >
         {{ item.name }}
       </v-btn>
-      <v-spacer />
-    </v-toolbar>
+    </v-card>
   </div>
 </template>
 
