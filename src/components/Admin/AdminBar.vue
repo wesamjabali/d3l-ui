@@ -3,23 +3,19 @@
     <NewCourse v-if="new_course" @done="new_course = false" />
     <AddRole v-if="add_role" @done="add_role = false" />
     <AddCourse v-if="add_course" @done="add_course = false" />
-    <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Admin Tools
-        </v-btn>
-      </template>
-
-      <v-list>
-        <v-list-item
-          v-for="item in mylist"
-          :key="item.name"
-          @click="item.action"
-        >
-          <v-list-item-title>{{ item.name }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+    <v-toolbar rounded flat color="secondary" dense>
+      <v-spacer />
+      <v-btn
+        v-for="item in admin_actions"
+        text
+        class="white--text"
+        :key="item.name"
+        @click="item.action"
+      >
+        {{ item.name }}
+      </v-btn>
+      <v-spacer />
+    </v-toolbar>
   </div>
 </template>
 
@@ -42,7 +38,7 @@ export default {
   data() {
     return {
       result: "",
-      mylist: [
+      admin_actions: [
         {
           name: "Add New Course",
           action: () => {

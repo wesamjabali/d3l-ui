@@ -1,7 +1,6 @@
 <template>
   <v-card
-    :class="['mx-auto', $vuetify.breakpoint.smAndUp ? 'px-8' : 'px-0']"
-    :width="this.$vuetify.breakpoint.mobile ? '100vw' : '70vw'"
+    :width="mobile_user ? '100vw' : '90vw'"
     min-height="90vh"
     elevation="0"
   >
@@ -44,6 +43,7 @@ export default {
   data() {
     return {
       all_courses: [],
+      mobile_user: !this.$vuetify.smAndUp,
     };
   },
   components: {

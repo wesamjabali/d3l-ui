@@ -42,26 +42,16 @@
       @done="view_discussion = false"
     />
 
-    <v-card
-      :class="['mx-auto', 'pb-5']"
-      :width="mobile_user ? '100vw' : '90vw'"
-      elevation="0"
-    >
-      <div class="text-center title py-2">
-        <div>
-          {{ course.title }}
-        </div>
-        <div class="subtitle-1">
-          {{ course.course_prefix }}-{{ course.course_number }}-{{
-            course.section_number
-          }}
-        </div>
-      </div>
-      <v-toolbar rounded outlined color="secondary" class="justify-center">
-        <v-btn v-if="authorized_user" text class="ml-5 white--text" @click="new_content_dialog = true"
+      <!-- Toolbar-->
+      <v-toolbar rounded flat color="secondary" dense>
+        <v-spacer />
+        <v-btn
+          v-if="authorized_user"
+          text
+          class="white--text"
+          @click="new_content_dialog = true"
           >New Content</v-btn
         >
-        <!-- Team Management for faculty -->
         <v-menu v-if="authorized_user" offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn v-bind="attrs" text class="ml-5 white--text" v-on="on">
@@ -79,9 +69,32 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-btn text class="ml-5 white--text" @click="new_discussion_dialog = true">New Discussion</v-btn>
+        <v-btn
+          text
+          class="ml-5 white--text"
+          @click="new_discussion_dialog = true"
+          >New Discussion</v-btn
+        >
+        <v-spacer />
       </v-toolbar>
-      <!-- END TM FACULTY -->
+      <!-- END toolbar -->
+      
+    <v-card
+      :class="['mx-auto', 'pb-5']"
+      :width="mobile_user ? '100vw' : '90vw'"
+      elevation="0"
+    >
+      <div class="text-center title py-2">
+        <div>
+          {{ course.title }}
+        </div>
+        <div class="subtitle-1">
+          {{ course.course_prefix }}-{{ course.course_number }}-{{
+            course.section_number
+          }}
+        </div>
+      </div>
+
       <v-row>
         <!-- Content -->
         <v-col cols="12" md="4">
