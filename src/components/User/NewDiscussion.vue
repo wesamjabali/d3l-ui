@@ -8,7 +8,7 @@
       <v-form
         class="px-8"
         @submit.prevent="submit"
-        @keyup.esc.native="$emit('done')"
+        @keyup.esc.native="$emit('cancel')"
         @keyup.enter.native="submit"
         ref="form"
       >
@@ -28,7 +28,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn text color="primary" v-on:click="submit"> Submit </v-btn>
-        <v-btn text v-on:click="$emit('done')"> Cancel </v-btn>
+        <v-btn text v-on:click="$emit('cancel')"> Cancel </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

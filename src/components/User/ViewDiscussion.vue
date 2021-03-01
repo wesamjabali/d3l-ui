@@ -6,8 +6,10 @@
       v-if="reply_id > -1"
       @done="
         reply_id = -1;
-        posts = [];
         get_discussion();
+      "
+      @cancel="
+        reply_id = -1;
       "
     />
     <v-dialog
@@ -43,7 +45,10 @@
             </div>
           </v-card>
         </v-card-text>
-        <div class="text-right secondary mx-n2 mt-1 py-2 px-2" color="secondary">
+        <div
+          class="text-right secondary mx-n2 mt-1 py-2 px-2"
+          color="secondary"
+        >
           <v-btn class="white--text" text @click="$emit('done')">Done</v-btn>
         </div>
       </v-card>

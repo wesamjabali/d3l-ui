@@ -15,6 +15,7 @@
         new_discussion_dialog = false;
         get_discussions();
       "
+      @cancel="new_discussion_dialog = false"
     />
     <NewTeam
       :course_id="course_id"
@@ -56,30 +57,31 @@
           }}
         </div>
       </div>
-      <v-btn v-if="authorized_user" @click="new_content_dialog = true"
-        >New Content</v-btn
-      >
-      <!-- Team Management for faculty -->
-      <v-menu v-if="authorized_user" offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on">
-            Manage teams
-          </v-btn>
-        </template>
+      <v-toolbar rounded outlined color="secondary" class="justify-center">
+        <v-btn v-if="authorized_user" text class="ml-5 white--text" @click="new_content_dialog = true"
+          >New Content</v-btn
+        >
+        <!-- Team Management for faculty -->
+        <v-menu v-if="authorized_user" offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-bind="attrs" text class="ml-5 white--text" v-on="on">
+              Manage teams
+            </v-btn>
+          </template>
 
-        <v-list>
-          <v-list-item
-            v-for="item in manage_team"
-            :key="item.name"
-            @click="item.action"
-          >
-            <v-list-item-title>{{ item.name }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-
+          <v-list>
+            <v-list-item
+              v-for="item in manage_team"
+              :key="item.name"
+              @click="item.action"
+            >
+              <v-list-item-title>{{ item.name }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-btn text class="ml-5 white--text" @click="new_discussion_dialog = true">New Discussion</v-btn>
+      </v-toolbar>
       <!-- END TM FACULTY -->
-      <v-btn @click="new_discussion_dialog = true">New Discussion</v-btn>
       <v-row>
         <!-- Content -->
         <v-col cols="12" md="4">
