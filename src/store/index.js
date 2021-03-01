@@ -18,6 +18,7 @@ const state = {
 const getters = {
   isLoggedIn: (state) => !!state.token,
   token: (state) => state.token || null,
+  id: (state) => state.user.id || "",
   email: (state) => state.user.email || "",
   roles: (state) => state.user.roles || [],
   first_name: (state) => state.user.first_name || "",

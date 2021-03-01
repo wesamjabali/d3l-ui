@@ -5,21 +5,26 @@
         {{ content.title }}
       </div>
       <v-card
-        v-if="content.points_total > -1"
+        v-if="
+          content.points_total > -1 &&
+            ($store.getters.roles.includes('faculty') ||
+              $store.getters.roles.includes('admin'))
+        "
         outlined
-        color="grey lighten-3"
-        class="text-center mt-3 mx-8"
+        color="grey lighten-4"
+        class="text-center mt-3 px-8"
       >
-        <v-form ref="form" class="mb-3">
+        <v-form
+          ref="form"
+          class="mb-n3"
+          @submit.prevent="grade"
+          @keyup.enter.native="grade"
+        >
           <v-autocomplete
             label="User"
             class="mt-3 mx-5"
-            :rules="required"
             outlined
-            v-if="
-              $store.getters.roles.includes('faculty') ||
-                $store.getters.roles.includes('admin')
-            "
+            @change="get_content_faculty"
             v-model="user_id"
             :items="all_users"
             :item-text="(user) => user.first_name + ' ' + user.last_name"
@@ -30,13 +35,19 @@
             class="mx-5"
             label="Points"
             type="number"
-            v-if="user_id"
             v-model="new_points_earned"
             :rules="points"
             outlined
+            v-if="user_id && content.points_earned <= -1"
           ></v-text-field>
 
-          <v-btn outlined color="primary" class="center" @click="grade">
+          <v-btn
+            outlined
+            v-if="user_id && content.points_earned <= -1"
+            color="primary"
+            class="center mb-6"
+            @click="grade"
+          >
             Submit Grade
           </v-btn>
         </v-form>
@@ -108,8 +119,13 @@ export default {
     content_id: String,
   },
   mounted() {
-    this.getOwnContent().then(() => {
-      this.get_all_users();
+    this.get_content().then(() => {
+      if (
+        this.$store.getters.roles.includes("faculty") ||
+        this.$store.getters.roles.includes("admin")
+      ) {
+        this.get_all_users();
+      }
     });
   },
   methods: {
@@ -120,19 +136,36 @@ export default {
       this.$axios
         .post("/faculty/content/grade", {
           content_id: this.content_id,
+          course_id: this.content.course_id,
           user_id: this.user_id,
           points_earned: this.new_points_earned,
         })
         .then(() => {
+          this.user_id = "";
+          this.new_points_earned = "";
           this.$snack.success("Grade posted!");
-        }).catch(() => {
-          this.$snack.error("User already has a grade.")
+        })
+        .catch(() => {
+          this.$snack.error("User already has a grade.");
         });
     },
-    async getOwnContent() {
+    async get_content() {
       await this.$axios
         .get("/user/content/getOwn", {
           params: { content_id: this.content_id },
+        })
+        .then((res) => {
+          let { content } = res.data;
+          this.content = content;
+        })
+        .catch(() => {
+          this.$snack.error("Error getting content data");
+        });
+    },
+    async get_content_faculty() {
+      await this.$axios
+        .get("/faculty/content/get", {
+          params: { content_id: this.content_id, user_id: this.user_id },
         })
         .then((res) => {
           let { content } = res.data;
@@ -149,7 +182,9 @@ export default {
           params: { course_id: this.content.course_id },
         })
         .then((res) => {
-          this.all_users = res.data.users;
+          this.all_users = res.data.users.filter(
+            (user) => user.id !== this.$store.getters.id
+          );
         })
         .catch(() => {
           this.$snack.error("An error occurred getting user data");
