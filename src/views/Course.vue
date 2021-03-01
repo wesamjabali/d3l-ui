@@ -208,6 +208,18 @@
               <div class="title text-center">Discussions</div>
               <div class="subtitle-2 text-center">Not implemented yet.</div>
             </div>
+            <v-card
+              class="mx-5 mb-5"
+              outlined
+              hover
+            >
+              <div class="title secondary white--text text-center py-2">
+                Discussion Post
+              </div>
+              <div class="subtitle-2 mx-5 mt-2 pb-2">
+                This is a sample Discussion Post for the sake of having one.
+              </div>
+            </v-card>
           </v-card>
         </v-col>
       </v-row>
