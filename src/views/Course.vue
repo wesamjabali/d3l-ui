@@ -79,10 +79,9 @@
       </v-menu>
 
       <!-- END TM FACULTY -->
-      <v-btn @click="new_discussion_dialog = true"
-        >New Discussion</v-btn
-      >
+      <v-btn @click="new_discussion_dialog = true">New Discussion</v-btn>
       <v-row>
+        <!-- Content -->
         <v-col cols="12" md="4">
           <v-card class="pb-5" outlined>
             <div class="primary white--text mb-5 py-2">
@@ -146,7 +145,38 @@
             </v-card>
           </v-card>
         </v-col>
+        <!-- End content -->
 
+        <!-- Discussions -->
+        <v-col cols="12" md="4">
+          <v-card class="pb-5" outlined>
+            <div class="primary white--text mb-5 py-2">
+              <div class="title text-center">Discussions</div>
+              <div class="subtitle-2 text-center">In this course</div>
+            </div>
+            <v-card
+              class="mx-5 mb-5"
+              outlined
+              hover
+              v-for="d in discussions"
+              @click="
+                discussion_id = d.id;
+                view_discussion = true;
+              "
+              :key="d.id"
+            >
+              <div class="title secondary white--text text-center py-2">
+                {{ d.title }}
+              </div>
+              <div class="subtitle-2 mx-5 mt-2 pb-2">
+                {{ d.body }}
+              </div>
+            </v-card>
+          </v-card>
+        </v-col>
+        <!-- End discussions -->
+
+        <!-- Team members -->
         <v-col
           cols="12"
           md="4"
@@ -181,7 +211,9 @@
             </v-card>
           </v-card>
         </v-col>
+        <!-- End team members -->
 
+        <!-- All users -->
         <v-col
           cols="12"
           md="4"
@@ -216,32 +248,7 @@
             </v-card>
           </v-card>
         </v-col>
-        <v-col cols="12" md="4">
-          <v-card class="pb-5" outlined>
-            <div class="primary white--text mb-5 py-2">
-              <div class="title text-center">Discussions</div>
-              <div class="subtitle-2 text-center">In this course</div>
-            </div>
-            <v-card
-              class="mx-5 mb-5"
-              outlined
-              hover
-              v-for="d in discussions"
-              @click="
-                discussion_id = d.id;
-                view_discussion = true;
-              "
-              :key="d.id"
-            >
-              <div class="title secondary white--text text-center py-2">
-                {{ d.title }}
-              </div>
-              <div class="subtitle-2 mx-5 mt-2 pb-2">
-                {{ d.body }}
-              </div>
-            </v-card>
-          </v-card>
-        </v-col>
+        <!-- End all users -->
       </v-row>
     </v-card>
   </div>
