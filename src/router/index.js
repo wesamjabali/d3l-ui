@@ -5,7 +5,6 @@ import Home from "@/views/Home.vue";
 import Register from "@/views/Register.vue";
 import Profile from "@/views/Profile.vue";
 import Playground from "@/views/Playground.vue";
-import Faculty from "@/views/Faculty.vue";
 import Course from "@/views/Course.vue";
 import axios from "../plugins/axios";
 import snack from "../plugins/snack";
@@ -41,11 +40,6 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
-  },
-  {
-    path: "/faculty",
-    name: "Faculty",
-    component: Faculty,
   },
   {
     path: "/course",

@@ -45,10 +45,39 @@ export default {
       required: [(v) => !!v || "This field is required"],
     };
   },
+  props: {
+    discussion_id: String,
+    course_id: String,
+  },
   methods: {
     async submit() {
       if (!this.$refs.form.validate()) {
         return;
+      }
+      if (this.discussion_id > -1) {
+        await this.$axios
+          .post("/user/discussion/new", {
+            course_id: this.course_id,
+            parent_id: this.discussion_id,
+            title: this.title,
+            body: this.body,
+          })
+          .then(() => {
+            this.$snack.success("Posted!");
+            this.$emit("done");
+          });
+      } else {
+        await this.$axios
+          .post("/user/discussion/new", {
+            course_id: this.course_id,
+            parent_id: null,
+            title: this.title,
+            body: this.body,
+          })
+          .then(() => {
+            this.$snack.success("Posted!");
+            this.$emit("done");
+          });
       }
     },
   },
