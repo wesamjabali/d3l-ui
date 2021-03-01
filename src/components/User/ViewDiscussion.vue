@@ -10,9 +10,9 @@
         get_discussion();
       "
     />
-    <v-dialog @click:outside="$emit('done')" width="90vw" v-model="dialog">
+    <v-dialog @click:outside="$emit('done')" :width="$vuetify.smAndUp ? '90vw' : '100vw'" v-model="dialog">
       <v-card class="px-2 pb-2">
-        <div class="title text-center secondary white--text py-5 mx-n10">
+        <div class="title text-center secondary white--text py-5 mx-n2">
           Discussion
         </div>
         <v-card
