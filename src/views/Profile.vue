@@ -90,7 +90,6 @@
           </v-row>
           <v-card-actions class="justify-end">
             <v-btn
-              type="button"
               color="red"
               outlined
               v-if="editing"
@@ -99,21 +98,16 @@
               >{{ $vuetify.breakpoint.smAndUp ? "Delete Account" : "Delete" }}
             </v-btn>
             <v-btn
-              type="button"
-              color="grey"
+              outlined
               v-if="!editing"
               @click="editing = !editing"
               class="mr-5"
               >Edit</v-btn
             >
-            <v-btn type="button" color="info" v-if="editing" class="mr-5">{{
+            <v-btn outlined color="info" v-if="editing" class="mr-5">{{
               $vuetify.breakpoint.smAndUp ? "Save Changes" : "Save"
             }}</v-btn>
-            <v-btn
-              type="button"
-              color="grey"
-              v-if="editing"
-              @click="editing = !editing"
+            <v-btn type="button" text v-if="editing" @click="editing = !editing"
               >Cancel</v-btn
             >
           </v-card-actions>
@@ -151,7 +145,7 @@ export default {
   methods: {
     async get_profile() {
       await this.$axios.get("/user/profile").then((res) => {
-        const {profile} = res.data;
+        const { profile } = res.data;
         const address_split = profile.address.split(",");
 
         this.first_name = profile.first_name;
