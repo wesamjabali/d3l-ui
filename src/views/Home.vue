@@ -1,5 +1,4 @@
 <template>
-  
   <v-card
     :class="['mx-auto', $vuetify.breakpoint.smAndUp ? 'px-8' : 'px-0']"
     :width="this.$vuetify.breakpoint.mobile ? '100vw' : '70vw'"
@@ -53,24 +52,16 @@ export default {
   mounted() {
     this.get_all_courses();
   },
-  computed:{
-    
+  computed: {
     isAdmin() {
       return this.$store.getters.roles.includes("admin");
-    }
+    },
   },
   methods: {
     async get_all_courses() {
-      await this.$axios
-        .get("/user/course/getAllCourses")
-        .then((res) => {
-          this.all_courses = res.data.courses;
-        })
-        .catch(() => {
-          this.$snack.error(
-            `An error occurred while loading your courses.<br />Please try to refresh.`
-          );
-        });
+      await this.$axios.get("/user/course/getAllCourses").then((res) => {
+        this.all_courses = res.data.courses;
+      });
     },
   },
 };
