@@ -3,18 +3,25 @@
     <NewContent
       :course_id="course_id"
       v-if="new_content_dialog"
-      @done="new_content_dialog = false"
+      @done="
+        new_content_dialog = false;
+        get_content_info();
+      "
     />
     <NewDiscussion
       :course_id="course_id"
       v-if="new_discussion_dialog"
-      @done="new_discussion_dialog = false"
+      @done="
+        new_discussion_dialog = false;
+        get_discussions();
+      "
     />
     <NewTeam
       :course_id="course_id"
       v-if="new_team_dialog"
       @done="new_team_dialog = false"
     />
+
     <AddTeam
       :course_id="course_id"
       v-if="add_team_member_dialog"
@@ -25,6 +32,13 @@
       v-if="view_content"
       :content_id="content_id"
       @done="view_content = false"
+    />
+
+    <ViewDiscussion
+      v-if="view_discussion"
+      :discussion_id="discussion_id"
+      :course_id="course_id"
+      @done="view_discussion = false"
     />
 
     <v-card
@@ -63,11 +77,11 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn v-if="authorized_user" @click="new_discussion_dialog = true"
+
+      <!-- END TM FACULTY -->
+      <v-btn @click="new_discussion_dialog = true"
         >New Discussion</v-btn
       >
-      <!-- END TM FACULTY -->
-
       <v-row>
         <v-col cols="12" md="4">
           <v-card class="pb-5" outlined>
@@ -206,8 +220,26 @@
           <v-card class="pb-5" outlined>
             <div class="primary white--text mb-5 py-2">
               <div class="title text-center">Discussions</div>
-              <div class="subtitle-2 text-center">Not implemented yet.</div>
+              <div class="subtitle-2 text-center">In this course</div>
             </div>
+            <v-card
+              class="mx-5 mb-5"
+              outlined
+              hover
+              v-for="d in discussions"
+              @click="
+                discussion_id = d.id;
+                view_discussion = true;
+              "
+              :key="d.id"
+            >
+              <div class="title secondary white--text text-center py-2">
+                {{ d.title }}
+              </div>
+              <div class="subtitle-2 mx-5 mt-2 pb-2">
+                {{ d.body }}
+              </div>
+            </v-card>
           </v-card>
         </v-col>
       </v-row>
@@ -221,6 +253,7 @@ import NewDiscussion from "@/components/User/NewDiscussion";
 import NewTeam from "@/components/Faculty/NewTeam";
 import AddTeam from "@/components/Faculty/AddTeam";
 import ViewContent from "@/components/User/ViewContent";
+import ViewDiscussion from "@/components/User/ViewDiscussion";
 export default {
   name: "Course",
   components: {
@@ -229,6 +262,7 @@ export default {
     NewTeam,
     AddTeam,
     ViewContent,
+    ViewDiscussion,
   },
   props: {
     course_id: String,
@@ -276,10 +310,12 @@ export default {
       course: [],
       content: [],
       all_users: [],
-      content_id: -1,
-      view_content: false,
-      team: [],
       discussions: [],
+      team: [],
+      content_id: -1,
+      discussion_id: -1,
+      view_content: false,
+      view_discussion: false,
       team_name: "",
     };
   },
@@ -288,8 +324,19 @@ export default {
     this.get_content_info();
     this.get_team();
     this.get_all_users();
+    this.get_discussions();
   },
   methods: {
+    async get_discussions() {
+      this.$axios
+        .get("/user/discussion/getAllByCourse", {
+          params: { course_id: this.course_id },
+        })
+        .then((res) => {
+          const { posts } = res.data;
+          this.discussions = posts;
+        });
+    },
     async get_all_users() {
       if (
         this.$store.getters.roles.includes("faculty") ||
