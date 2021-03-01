@@ -2,19 +2,10 @@
   <v-row>
     <DeleteAccount v-if="deleteDialog" @done="deleteDialog = false" />
     <div class="mx-auto">
-      <v-card class="ma-6 pa-6" width="90vw">
-        <v-row>
-          <v-col cols="12" class="d-flex justify-center">
-            <div class="title">
-              User Profile
-            </div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-divider> </v-divider>
-          </v-col>
-        </v-row>
+      <v-card width="90vw" class="px-5">
+        <div class="text-center py-6 mb-5 mx-n5 white--text title secondary">
+          User Profile
+        </div>
         <v-form ref="userProfileForm" :disabled="!editing">
           <v-row>
             <v-col cols="12" sm="6">
