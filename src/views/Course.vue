@@ -224,7 +224,7 @@ export default {
     };
   },
   mounted() {
-    // this.grade();
+    this.grade();
     this.get_course_info();
     this.get_content_info();
     this.get_grades();
