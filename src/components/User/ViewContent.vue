@@ -1,5 +1,5 @@
 <template>
-  <v-dialog persistent width="500px" v-model="dialog">
+  <v-dialog @click:outside="$emit('done')" width="500px" v-model="dialog">
     <v-card class="px-10">
       <div class="title text-center secondary white--text py-5 mx-n10">
         {{ content.title }}

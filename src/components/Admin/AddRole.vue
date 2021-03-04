@@ -1,5 +1,5 @@
 <template>
-  <v-dialog persistent width="500px" v-model="dialog">
+  <v-dialog @click:outside="$emit('done')" width="500px" v-model="dialog">
     <v-card class="px-2 py-2">
       <v-card-title class="d-flex justify-center">
         Add Role
