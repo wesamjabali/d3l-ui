@@ -8,25 +8,23 @@
         reply_id = -1;
         get_discussion();
       "
-      @cancel="
-        reply_id = -1;
-      "
+      @cancel="reply_id = -1"
     />
     <v-dialog
       @click:outside="$emit('done')"
-      :width="$vuetify.smAndUp ? '90vw' : '100vw'"
+      :width="$vuetify.smAndUp ? '100vw' : '80vw'"
       v-model="dialog"
       scrollable
     >
-      <v-card class="px-2">
-        <div class="title text-center secondary white--text py-5 mx-n2">
+      <v-card color="grey lighten-3">
+        <div class="title text-center secondary white--text mb-2 py-5">
           Discussion
         </div>
         <v-card-text>
           <v-card
             outlined
             hover
-            class="my-1 px-2"
+            class="px-5"
             :style="'margin-left: ' + p.depth * 3 + 'vw'"
             v-for="p in posts"
             :key="p.id"
@@ -35,12 +33,11 @@
               reply_id = p.id;
               new_post = true;
             "
-            color="grey lighten-3"
           >
-            <div class="title text-center mb-2">
+            <div class="title text-left mb-1">
               {{ p.title }}
             </div>
-            <div class="text-left mb-3">
+            <div class="text-left mb-2">
               {{ p.body }}
             </div>
           </v-card>

@@ -92,16 +92,16 @@
       <v-row>
         <!-- Content -->
         <v-col cols="12" md="4">
-          <v-card class="pb-5" outlined>
-            <div class="primary white--text mb-5 py-2">
+          <v-card flat>
+            <div class="primary white--text py-2">
               <div class="title text-center">Content</div>
               <div class="subtitle-2 text-center">Click to view Content</div>
             </div>
 
             <v-card
-              :class="[!mobile_user ? 'mx-5' : 'mx-3', 'mb-5']"
               outlined
               hover
+              tile
               v-for="item in content"
               :key="item.id"
               @click="
@@ -109,12 +109,12 @@
                 content_id = item.id;
               "
             >
-              <div class="title secondary white--text text-center py-2">
+              <div class="title text-left mx-5 py-2">
                 {{ item.title }}
               </div>
 
-              <div class="subtitle-2 mx-5 mt-2">{{ item.body }}</div>
-              <v-card-actions class="justify-end mb-n2">
+              <div class="subtitle-2 mx-5">{{ item.body }}</div>
+              <v-card-actions class="justify-end ">
                 <div
                   v-if="
                     item.points_earned > -1 &&
@@ -158,28 +158,24 @@
 
         <!-- Discussions -->
         <v-col cols="12" md="4">
-          <v-card class="pb-5" outlined>
-            <div class="primary white--text mb-5 py-2">
+          <v-card flat>
+            <div class="primary white--text py-2">
               <div class="title text-center">Discussions</div>
               <div class="subtitle-2 text-center">In this course</div>
             </div>
             <v-card
-              class="mx-5 mb-5"
               outlined
               hover
+              tile
               v-for="d in discussions"
-              @click="
-                discussion_id = d.id;
-                view_discussion = true;
-              "
               :key="d.id"
+              @click="
+                view_discussion = true;
+                discussion_id = d.id;
+              "
             >
-              <div class="title secondary white--text text-center py-2">
-                {{ d.title }}
-              </div>
-              <div class="subtitle-2 mx-5 mt-2 pb-2">
-                {{ d.body }}
-              </div>
+              <div class="title text-left mx-5 py-2">{{ d.title }}</div>
+              <div class="subtitle-2 mx-5 mb-4">{{ d.body }}</div>
             </v-card>
           </v-card>
         </v-col>
@@ -194,22 +190,22 @@
               !$store.getters.roles.includes('admin')
           "
         >
-          <v-card class="pb-5" outlined>
-            <div class="primary white--text mb-5 py-2">
+          <v-card flat>
+            <div class="primary white--text py-2">
               <div class="title text-center">{{ team_name }}</div>
               <div class="subtitle-2 text-center">Members</div>
             </div>
             <v-card
-              class="mx-5 mb-5"
               outlined
               hover
+              tile
               v-for="person in team"
               :key="person.id"
             >
-              <div class="title secondary white--text text-center py-2">
+              <div class="title text-left mx-5 py-2">
                 {{ person.first_name + " " + person.last_name }}
               </div>
-              <div class="subtitle-2 mx-5 mt-2 pb-2">
+              <div class="subtitle-2 mx-5 pb-4">
                 <b>Phone: </b>
                 {{ person.phone }}
                 <br />
@@ -231,27 +227,26 @@
               $store.getters.roles.includes('admin')
           "
         >
-          <v-card class="pb-5" outlined>
-            <div class="primary white--text mb-5 py-2">
+          <v-card flat>
+            <div class="primary white--text py-2">
               <div class="title text-center">Students</div>
               <div class="subtitle-2 text-center">In this course</div>
             </div>
             <v-card
-              class="mx-5 mb-5"
               outlined
               hover
+              tile
               v-for="user in all_users"
               :key="user.id"
             >
-              <div class="title secondary white--text text-center py-2">
+              <div class="title text-left mx-5 py-2">
                 {{ user.first_name + " " + user.last_name }}
               </div>
-              <div class="subtitle-2 mx-5 mt-2 pb-2">
+              <div class="subtitle-2 mx-5 pb-4">
                 <b>Phone: </b>
                 {{ user.phone }}
                 <br />
                 <b>Email: </b>
-
                 {{ user.email }}
               </div>
             </v-card>
