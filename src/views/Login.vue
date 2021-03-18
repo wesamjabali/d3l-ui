@@ -3,7 +3,7 @@
     <v-col cols="12" class="d-flex justify-center">
       <v-card :width="$vuetify.breakpoint.xsOnly ? '100vw' : '70vw'">
         <v-img
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          src="https://github.com/wesamjabali/d3l-ui/blob/main/src/assets/login.jpg?raw=true"
           height="15vh"
         >
         </v-img>
